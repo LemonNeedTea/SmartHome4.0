@@ -1,0 +1,107 @@
+// http://ionicframework.com/docs/theming/
+@import '~@ionic/angular/css/core.css';
+@import '~@ionic/angular/css/normalize.css';
+@import '~@ionic/angular/css/structure.css';
+@import '~@ionic/angular/css/typography.css';
+
+@import '~@ionic/angular/css/padding.css';
+@import '~@ionic/angular/css/float-elements.css';
+@import '~@ionic/angular/css/text-alignment.css';
+@import '~@ionic/angular/css/text-transformation.css';
+@import '~@ionic/angular/css/flex-utils.css';
+
+
+@media screen and (min-width: 700px) {
+    .form {
+      width: 35%;
+      margin-left: 32.5%;
+      margin-right: 32.5%;
+    }
+  }
+  .item-ios {
+    background: transparent;
+  }
+  ion-title {
+    position: absolute;
+    top: 0;
+    left: 0;
+    padding: 0 90px 1px;
+    width: 100%;
+    height: 100%;
+    text-align: center;
+    font-family: 'Lexend Exa', sans-serif;
+  }
+  
+  .item-md {
+    background: transparent;
+  }
+  
+  .goodfont {
+    font-family: 'Lexend Exa', sans-serif;
+  }
+
+
+  .circle{
+    padding: 5px;
+    width: 200px;
+    margin-top: 25px;
+    height: 200px;
+    border-radius: 100%;
+    background: white;
+    border: 2px solid grey;
+}
+
+
+
+  .cut {
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+  }
+  
+  .terms-text {
+    color:#989aa2;
+    font-size: 13px;
+  }
+  
+  .menutext {
+    color: var(--ion-color-secondary);
+    font-family: 'Lexend Exa', sans-serif;
+  
+  }
+  .menufooter {
+    color: var(--ion-color-secondary);
+    font-size: 16px;
+    font-family: 'Lexend Exa', sans-serif;
+  }
+
+  /* in-flight clone */
+  .gu-mirror {
+    position: fixed !important;
+    margin: 0 !important;
+    z-index: 9999 !important;
+    opacity: 0.8;
+    -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=80)";
+    filter: alpha(opacity=80);
+    pointer-events: none;
+  }
+
+  /* high-performance display:none; helper */
+  .gu-hide {
+    left: -9999px !important;
+  }
+
+  /* added to mirrorContainer (default = body) while dragging */
+  .gu-unselectable {
+    -webkit-user-select: none !important;
+    -moz-user-select: none !important;
+    -ms-user-select: none !important;
+    user-select: none !important;
+  }
+
+  /* added to the source element while its mirror is dragged */
+  .gu-transit {
+    opacity: 0.2;
+    -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=20)";
+    filter: alpha(opacity=20);
+  }

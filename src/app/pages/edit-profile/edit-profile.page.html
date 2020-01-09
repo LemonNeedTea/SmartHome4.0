@@ -1,0 +1,54 @@
+<ion-header no-border>
+  <ion-toolbar no-border>
+   
+    <ion-title>Edit Profile</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content padding>
+  <div class="form">
+  
+  <div   text-center>
+   <img *ngIf="img && !urlImage" src="{{img}}" class="circle"> 
+    <img *ngIf="urlImage"  [src]="urlImage | async" class="circle" > 
+   
+    <br>
+    <br>
+    <img *ngIf="!urlImage && !img"  src="assets/user.svg" width="200px"> <br>
+    </div>
+
+
+  <div margin-bottom margin-top text-center>
+    <label class="custom-file-upload" style="margin:auto;max-width:400px">
+      <input id="file-upload" placeholder="Seleciona imagen" type="file" accept=".png, .jpg"
+        (change)="onUpload($event)" />
+      <ion-icon margin-right name="cloud-download"></ion-icon> Select profile photo
+    </label>
+  </div>
+
+  <br>
+    <h3>Profile info</h3>
+
+  <br>
+  <ion-item margin-bottom margin-bottom >
+    <ion-input (keyup.enter)="moveFocus(b)" type="text" placeholder="Name" [(ngModel)]="name"></ion-input>
+  </ion-item>
+  <ion-item margin-bottom margin-bottom >
+    <ion-input #b (keyup.enter)="moveFocus(d)" type="text" placeholder="Phone" [(ngModel)]="phone"></ion-input>
+  </ion-item>
+
+  <ion-item margin-bottom margin-bottom >
+    <ion-input [(ngModel)]="mail" disabled></ion-input>
+  </ion-item>
+
+  <ion-item margin-bottom margin-bottom >
+    <ion-input #d (keyup.enter)="save(name, phone,adress)" type="text" placeholder="Direcction" [(ngModel)]="adress">
+    </ion-input>
+  </ion-item>
+
+  <input #imageProd type="hidden" [value]="urlImage | async" style="color:black;">
+  <br><br>
+  <ion-button mode="ios" size="large" (click)="save(name, phone,adress)" class="main-container" color="light" expand="block">
+    Save</ion-button>
+  </div>
+</ion-content>

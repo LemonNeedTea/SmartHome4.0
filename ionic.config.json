@@ -1,0 +1,7 @@
+{
+  "name": "SmartHome4.0",
+  "integrations": {
+    "cordova": {}
+  },
+  "type": "angular"
+}
