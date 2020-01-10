@@ -16,7 +16,7 @@ export class AxiosService {
               private loading: LoadingController,
               private toastCtrl: ToastController,
               private router: Router) {
-    axios.defaults.baseURL = 'http://192.168.1.103:8888';
+    axios.defaults.baseURL = 'http://localhost:8888';
     // 添加响应拦截器
     axios.interceptors.request.use(
       async (config: AxiosRequestConfig) => {

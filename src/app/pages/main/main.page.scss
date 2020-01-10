@@ -116,4 +116,12 @@ ion-toolbar {
   text-overflow: ellipsis;
   max-width: 150px;
 }
+ion-toolbar {
+--background: transparent !important;
+--ion-color-base: transparent !important;
+--min-height:60px;
+}
+ion-header {
+    --ion-toolbar-background-color: rgba(0, 0, 0, 0);
+}
 

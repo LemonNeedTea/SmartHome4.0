@@ -1,19 +1,20 @@
-<ion-content forceOverscroll="false">
-    <div class="home-header" #homeHeaderContent>
-        <ion-toolbar transparent style="height: 80px;">
-            <ion-buttons slot="start">
-                <ion-button color='medium'>
-                    <ion-text class="username"> 波的家庭波的家庭</ion-text>
-                    <ion-icon name="arrow-forward"></ion-icon>
-                </ion-button>
-            </ion-buttons>
-            <ion-buttons slot="end">
-                <ion-button (click)="goedit()">
-                    <ion-icon color="medium" name="add" slot="icon-only"></ion-icon>
-                </ion-button>
-            </ion-buttons>
-        </ion-toolbar>
-    </div>
+<ion-header no-border>
+    <ion-toolbar>
+        <ion-buttons slot="start">
+            <ion-button color='medium'>
+                <ion-text class="username"> 波的家庭波的家庭</ion-text>
+                <ion-icon name="arrow-forward"></ion-icon>
+            </ion-button>
+        </ion-buttons>
+        <ion-buttons slot="end">
+            <ion-button (click)="goedit()">
+                <ion-icon color="medium" name="add" slot="icon-only"></ion-icon>
+            </ion-button>
+        </ion-buttons>
+    </ion-toolbar>
+</ion-header>
+
+<ion-content fullscreen forceOverscroll="true">
     <ion-grid>
         <ion-row dragula="bag">
             <ion-col size="4" align-self-center>
