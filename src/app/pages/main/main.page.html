@@ -14,8 +14,8 @@
     </ion-toolbar>
 </ion-header>
 
-<ion-content fullscreen forceOverscroll="true">
-    <ion-grid>
+<ion-content fullscreen [forceOverscroll]="forceOverscroll">
+    <ion-grid >
         <ion-row dragula="bag">
             <ion-col size="4" align-self-center>
                 <div class="move">移动1</div>
@@ -51,9 +51,5 @@
           
         </ion-row> -->
     </ion-grid>
-
-    <ion-row class="delete-area" align-items-center justify-content-center>
-        <ion-icon name="trash" color="medium"></ion-icon>
-    </ion-row>
 
 </ion-content>

@@ -1,9 +1,9 @@
 
-import { Component , OnInit, ViewChild} from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { ServicesService } from '../../services/services.service';
 import { LoginRequestService } from '../../services/request/login-request.service';
-import {  ToastController} from '@ionic/angular';
+import { ToastController } from '@ionic/angular';
 import { DragulaService } from 'ng2-dragula';
 @Component({
   selector: 'app-main',
@@ -14,34 +14,19 @@ export class MainPage implements OnInit {
 
   item: any;
   id: string;
-
-  q1 = [
-    { value: 'Buy Milk', color: 'primary' },
-    { value: 'Write new Post', color: 'primary' }
-  ];
-  q2 = [
-    { value: 'Schedule newsletter', color: 'secondary' },
-    { value: 'Find new Ionic Academy topics', color: 'secondary' }
-  ];
-  q3 = [
-    { value: 'Improve page performance', color: 'tertiary' },
-    { value: 'Clean the house', color: 'tertiary' }
-  ];
-  q4 = [
-    { value: 'Unimportant things', color: 'warning' },
-    { value: 'Watch Netflix', color: 'warning' }
-  ];
+  forceOverscroll = true;
 
   todo = { value: '', color: '' };
   selectedQuadrant = 'q1';
-  constructor(private router: Router ,
+  constructor(private router: Router,
     public services: ServicesService,
     private login: LoginRequestService,
     private dragulaService: DragulaService,
-    private toastController: ToastController ) {
+    private toastController: ToastController) {
     this.dragulaService.drag('bag')
-      .subscribe(({ name, el, source }) => {
-        el.setAttribute('color', 'danger');
+      .subscribe(({ name, el, source }) => {// 拖动开始
+        console.log('drag');
+        this.forceOverscroll = false ;
       });
 
     this.dragulaService.removeModel('bag')
@@ -57,10 +42,22 @@ export class MainPage implements OnInit {
         item['color'] = 'success';
       });
 
-    this.dragulaService.createGroup('bag', {
-      removeOnSpill: true
+    this.dragulaService.over('bag').subscribe((value) => {
+        console.log('voer');
+
     });
-    }
+
+    this.dragulaService.out('bag').subscribe((value) => {// 拖动结束
+      console.log('out');
+      this.forceOverscroll = true ;
+
+
+    });
+
+    // this.dragulaService.createGroup('bag', {
+    //   removeOnSpill: true
+    // });
+  }
   addTodo() {
     switch (this.selectedQuadrant) {
       case 'q1':
