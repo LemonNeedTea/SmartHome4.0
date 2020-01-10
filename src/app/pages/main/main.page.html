@@ -15,7 +15,29 @@
 </ion-header>
 
 <ion-content fullscreen [forceOverscroll]="forceOverscroll">
-    <ion-grid >
+    <ion-grid>
+        <ion-row>
+            <ion-col>
+                <ion-text color='medium' style="font-size: 12px;">
+                    <ion-icon name="tablet-portrait"></ion-icon>
+                    2个设备 | 4个智能场景
+                </ion-text>
+            </ion-col>
+        </ion-row>
+    </ion-grid>
+
+    <!--设备标题-->
+    <ion-grid style="margin-top:20px">
+        <ion-row>
+            <ion-col>
+                <ion-text color='medium' style="font-size: 16px;">
+                    设备
+                </ion-text>
+            </ion-col>
+        </ion-row>
+    </ion-grid>
+    <!--设备内容-->
+    <ion-grid>
         <ion-row dragula="bag">
             <ion-col size="4" align-self-center>
                 <div class="move">移动1</div>
