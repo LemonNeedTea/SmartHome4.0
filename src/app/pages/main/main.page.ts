@@ -26,7 +26,7 @@ export class MainPage implements OnInit {
     this.dragulaService.drag('bag')
       .subscribe(({ name, el, source }) => {// 拖动开始
         console.log('drag');
-        this.forceOverscroll = false ;
+        this.forceOverscroll = false;
       });
 
     this.dragulaService.removeModel('bag')
@@ -43,13 +43,13 @@ export class MainPage implements OnInit {
       });
 
     this.dragulaService.over('bag').subscribe((value) => {
-        console.log('voer');
+      console.log('voer');
 
     });
 
     this.dragulaService.out('bag').subscribe((value) => {// 拖动结束
       console.log('out');
-      this.forceOverscroll = true ;
+      this.forceOverscroll = true;
 
 
     });
