@@ -35,14 +35,15 @@ export class AxiosService {
       },
       async error => {
         // 请求失败处理
-        this.loading.dismiss();
+        this.tools.dismissLoading();
         return Promise.reject(error);
       }
     );
     axios.interceptors.response.use(
       async response => {
 
-        this.loading.dismiss();
+        this.tools.dismissLoading();
+
         const tempData = response.data;
         if (tempData.success) {
           return tempData.data;
@@ -63,7 +64,7 @@ export class AxiosService {
       },
       async error => {
         // 请求失败处理
-        this.loading.dismiss();
+        this.tools.dismissLoading();
         return Promise.reject(error);
       }
     );

@@ -42,6 +42,9 @@ export class ToolsService {
     await loader.present();
     return loader;
   }
+  async dismissLoading() {
+    this.loadingCtrl.dismiss();
+  }
   /**˝
  // tslint:disable-next-line: jsdoc-format
  * Toast全局提示
