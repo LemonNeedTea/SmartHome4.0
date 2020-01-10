@@ -1,0 +1,73 @@
+.cate_content {
+  width: 100%;
+  height: 100%;
+  /*首先看高度100% 是否管用  如果没有作用我们要给元素设置绝对定位*/
+  display: flex;
+
+  .cate_left {
+    width: 100px;
+    height: 100%;
+    border-right: 1px solid #eee;
+    overflow-y: auto;
+    color: #666;
+    max-width: 250px;
+    //   min-width: 95px;
+
+    .item-selected {
+      border-left: 3px;
+      border-left-style: solid;
+      // border-color: color($colors, primary);
+      background-color: #eee;
+    }
+
+    ion-item {
+      padding: 0;
+      text-align: center;
+
+      .item-inner {
+        padding: 0;
+      }
+
+      // img{
+      //     width: 20px;
+      //     height: 20px;
+      // }
+    }
+  }
+}
+
+.my-list {
+  list-style: none; /*去掉小圆点*/
+  //   margin: 0;
+  padding: 0;
+}
+.my-list li {
+  text-align: center;
+  height: 40px;
+  line-height: 40px;
+  font-size: 14px;
+}
+.left-select {
+  color: var(--ion-color-primary);
+}
+.cate_right {
+    width: 100%;
+}
+.cate_right ion-grid{
+    width: 100%;
+}
+.cate_right ion-col{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+.cate_right .img{
+    height: 50px;
+    width: 50px;
+}
+.cate_right ion-text{
+    font-size: 12px;
+    margin: 15px 0;
+    color: #333;
+}

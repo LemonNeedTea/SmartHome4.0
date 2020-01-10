@@ -7,6 +7,35 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content>
+<ion-content fullscreen forceOverscroll='true'>
+  <div class="cate_content">
+    <div class="cate_left">
+      <ul class="my-list">
+        <li *ngFor="let item of typeList" (click)="setType(item.id)"
+          [ngClass]="{'left-select': item.id===selectTypeID}">
+          <ion-text>
+            {{item.name}}
+          </ion-text>
+        </li>
 
+
+
+      </ul>
+    </div>
+
+    <div class="cate_right">
+      <ion-grid >
+        <ion-row>
+          <ion-col  align-self-center size="4" *ngFor="let device of showDeviceList">
+            <ion-img class="img" [src]="device.img"></ion-img>
+            <ion-text>
+              {{device.name}}
+            </ion-text>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+    </div>
+
+
+  </div>
 </ion-content>
