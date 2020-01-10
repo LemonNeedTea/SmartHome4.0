@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { Router, ActivatedRoute } from '@angular/router';
+import { NavController } from '@ionic/angular';
+import { Router } from '@angular/router';
+
 import { ServicesService } from '../../services/services.service';
 import { ThemeService } from '../../services/theme.service';
 import { LoginRequestService } from '../../services/request/login-request.service';
@@ -15,12 +17,13 @@ export class ProfilePage implements OnInit {
   uid: any;
   item: any;
   anuncios: any;
-  empty: Boolean;
-  darkMode: Boolean;
-  constructor(private rout: Router,
-    private services: ServicesService,
-    private theme: ThemeService,
-    private login: LoginRequestService) {
+  empty: boolean;
+  darkMode: boolean;
+  constructor(private nav: NavController,
+              private services: ServicesService,
+              private theme: ThemeService,
+              private login: LoginRequestService,
+    private router: Router) {
 
   }
 
@@ -80,13 +83,12 @@ export class ProfilePage implements OnInit {
 
 
   goedit() {
-    this.rout.navigateByUrl(`/edit-profile`);
+    // this.rout.navigateByUrl(`/edit-profile`);
   }
 
   async signOut() {
     const res = await this.login.logout();
-    console.log(res);
-    this.rout.navigateByUrl('/login');
+    this.nav.navigateRoot('login');
   }
 
 

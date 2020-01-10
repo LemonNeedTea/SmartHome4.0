@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
+import{ NavController } from '@ionic/angular';
 
 @Component({
   selector: 'app-shop',
@@ -7,9 +9,14 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ShopPage implements OnInit {
 
-  constructor() { }
+  constructor(private router: Router,
+              private navCtrl: NavController) { }
 
   ngOnInit() {
+  }
+  addDevice() {
+    this.navCtrl.navigateForward('device-catalogue');
+    // this.router.navigateByUrl('device-catalogue');
   }
 
 }

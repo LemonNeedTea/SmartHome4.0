@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
-import { AlertController } from '@ionic/angular'
+import { AlertController,NavController } from '@ionic/angular'
 import { LoginRequestService } from '../../services/request/login-request.service';
 import { ToolsService } from '../../services/tools.service';
 
@@ -21,8 +21,9 @@ export class LoginPage {
   passwordIcon = 'eye-off';
 
   constructor( public rout: Router, public alertController: AlertController,
-    private loginRequet: LoginRequestService,
-    private tools: ToolsService) {
+               private loginRequet: LoginRequestService,
+               private tools: ToolsService,
+               private nav: NavController) {
     this.getCode(); // 获取验证码图片
 
   }

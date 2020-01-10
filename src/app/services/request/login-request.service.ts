@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { AxiosService } from '../axios.service';
 import {ToolsService} from '../tools.service';
 import { ServicesService } from '../services.service';
+import { NavController } from '@ionic/angular';
 
 @Injectable({
   providedIn: 'root'
@@ -9,8 +10,9 @@ import { ServicesService } from '../services.service';
 export class LoginRequestService {
 
   constructor(private axiosHttp: AxiosService,
-    private tools: ToolsService,
-    private services: ServicesService) { }
+              private tools: ToolsService,
+              private services: ServicesService,
+              private nav: NavController) { }
   /**
    * 获取登录验证码图片数据
    */
@@ -32,7 +34,8 @@ export class LoginRequestService {
     }).then((res: any) => {
       // 成功保存token
       this.tools.setToken(res.token);
-      this.services.goto('/tabs/main');
+      // this.services.goto('/tabs/main');
+      this.nav.navigateRoot('/tabs/main');
     }).catch(err => {
       console.log(err) ;
     });

@@ -58,24 +58,7 @@ export class MainPage implements OnInit {
     //   removeOnSpill: true
     // });
   }
-  addTodo() {
-    switch (this.selectedQuadrant) {
-      case 'q1':
-        this.todo.color = 'primary';
-        break;
-      case 'q2':
-        this.todo.color = 'secondary';
-        break;
-      case 'q3':
-        this.todo.color = 'tertiary';
-        break;
-      case 'q4':
-        this.todo.color = 'warning';
-        break;
-    }
-    this[this.selectedQuadrant].push(this.todo);
-    this.todo = { value: '', color: '' };
-  }
+
   ngOnInit() {
     this.logued();
   }
@@ -108,5 +91,8 @@ export class MainPage implements OnInit {
 
   profile() {
     this.router.navigateByUrl(`profile`);
+  }
+  addDevice() {
+    this.router.navigateByUrl('device-catalogue');
   }
 }

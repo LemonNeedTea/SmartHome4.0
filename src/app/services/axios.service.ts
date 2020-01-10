@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 import axios, { AxiosRequestConfig } from 'axios';
-import { LoadingController, ToastController } from '@ionic/angular';
+import { LoadingController, ToastController, NavController } from '@ionic/angular';
 import { ToolsService } from './tools.service';
-import { Router } from '@angular/router';
+import { ThemeService } from './theme.service';
 
 
 @Injectable({
@@ -15,7 +15,7 @@ export class AxiosService {
   constructor(private tools: ToolsService,
               private loading: LoadingController,
               private toastCtrl: ToastController,
-              private router: Router) {
+              private nav: NavController) {
     axios.defaults.baseURL = 'http://localhost:8888';
     // 添加响应拦截器
     axios.interceptors.request.use(
@@ -54,7 +54,7 @@ export class AxiosService {
             // 1.清除token
             this.tools.cleanToken();
             // 2.弹出确认返回登录框
-            this.router.navigateByUrl('/login');
+            this.nav.navigateRoot('/login');
 
           }
           console.error(tempData);
