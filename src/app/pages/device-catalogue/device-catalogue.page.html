@@ -5,14 +5,16 @@
     </ion-buttons>
     <ion-title>分类</ion-title>
   </ion-toolbar>
+  <!-- Searchbar with cancel button always shown -->
+  <ion-searchbar placeholder="搜索"></ion-searchbar>
 </ion-header>
 
 <ion-content fullscreen forceOverscroll='true'>
   <div class="cate_content">
     <div class="cate_left">
       <ul class="my-list">
-        <li *ngFor="let item of typeList" (click)="setType(item.id)"
-          [ngClass]="{'left-select': item.id===selectTypeID}">
+        <li *ngFor="let item of categoryList" (click)="setType(item.id)"
+          [ngClass]="{'left-select': item.id===selectCategoryID}">
           <ion-text>
             {{item.name}}
           </ion-text>
@@ -26,10 +28,10 @@
     <div class="cate_right">
       <ion-grid >
         <ion-row>
-          <ion-col  align-self-center size="4" *ngFor="let device of showDeviceList">
-            <ion-img class="img" [src]="device.img"></ion-img>
+          <ion-col  (click)="goDeviceConfig(type)" size="4" *ngFor="let type of showTypeList">
+            <ion-img class="img" [src]="type.img"></ion-img>
             <ion-text>
-              {{device.name}}
+              {{type.name}}
             </ion-text>
           </ion-col>
         </ion-row>
@@ -39,3 +41,4 @@
 
   </div>
 </ion-content>
+

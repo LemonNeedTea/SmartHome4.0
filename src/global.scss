@@ -105,3 +105,8 @@
     -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=20)";
     filter: alpha(opacity=20);
   }
+
+  ion-toolbar {
+  --ion-color-base: transparent !important;
+  --border-color:transparent !important;
+}

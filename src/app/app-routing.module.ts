@@ -13,6 +13,10 @@ const routes: Routes = [
   {
     path: 'device-catalogue',
     loadChildren: () => import('./pages/device-catalogue/device-catalogue.module').then( m => m.DeviceCataloguePageModule)
+  },
+  {
+    path: 'device-config',
+    loadChildren: () => import('./pages/device-config/device-config.module').then( m => m.DeviceConfigPageModule)
   }
 ];
 @NgModule({

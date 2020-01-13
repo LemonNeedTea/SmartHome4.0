@@ -74,6 +74,10 @@ export class AxiosService {
     this.isLoading = isLoading;
     return axios.get(url, params);
   }
+  async getByID(url: string, id: any, isLoading = true) {
+    this.isLoading = isLoading;
+    return axios.get(url + '/' + id);
+  }
   async post(url: string, params: any, isLoading = true) {
     this.isLoading = isLoading;
     return axios.post(url, params);
