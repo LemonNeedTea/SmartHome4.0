@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { DeviceRequestService } from '../../services/request/device-request.service';
 
 @Component({
@@ -10,16 +10,21 @@ import { DeviceRequestService } from '../../services/request/device-request.serv
 export class DeviceConfigPage implements OnInit {
 
   img: string;
-  constructor(private route: ActivatedRoute, private device: DeviceRequestService) {
-    const queryParams = this.route.snapshot.queryParams;
-    console.log(queryParams);
-    this.device.getInfoByTypeID(queryParams.code).then((res: any) => {
+  queryParams: any;
+  constructor(private route: ActivatedRoute, private device: DeviceRequestService,
+              private router: Router) {
+    this.queryParams = this.route.snapshot.queryParams;
+    console.log(this.queryParams);
+    this.device.getInfoByTypeID(this.queryParams.code).then((res: any) => {
       console.log(res);
       this.img = res.img;
     });
    }
 
   ngOnInit() {
+  }
+  goWifiSettting() {
+    this.router.navigate(['/wifi-setting'], { queryParams: this.queryParams});
   }
 
 }

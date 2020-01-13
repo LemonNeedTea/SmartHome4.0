@@ -17,6 +17,14 @@ const routes: Routes = [
   {
     path: 'device-config',
     loadChildren: () => import('./pages/device-config/device-config.module').then( m => m.DeviceConfigPageModule)
+  },
+  {
+    path: 'wifi-setting',
+    loadChildren: () => import('./pages/wifi-setting/wifi-setting.module').then( m => m.WifiSettingPageModule)
+  },
+  {
+    path: 'wifi-push',
+    loadChildren: () => import('./pages/wifi-push/wifi-push.module').then( m => m.WifiPushPageModule)
   }
 ];
 @NgModule({

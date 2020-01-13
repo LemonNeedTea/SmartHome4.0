@@ -11,13 +11,14 @@
 <ion-img [src]="img"></ion-img>
 </ion-content>
 <ion-footer>
-  <!-- <ion-toolbar>
-    <input type="radio" name="已完成上述操作" id="">
-
-  </ion-toolbar> -->
+    <ion-item lines="none">
+      <ion-label>已完成上述操作</ion-label>
+    <ion-checkbox color="primary" slot="start" [(ngModel)]='check'></ion-checkbox>
+    </ion-item>
+  
   <ion-toolbar class="next">
     <ion-title>
-    <ion-button size='small' color='light'>下一步</ion-button>
+    <ion-button size='small' color='light' [disabled]='!check' (click)="goWifiSettting()">下一步</ion-button>
 
     </ion-title>
   </ion-toolbar>
