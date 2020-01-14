@@ -17,4 +17,7 @@ export class DeviceRequestService {
   async getInfoByTypeID(typeID: number) {
     return await  this.axiosHttp.getByID('/deviceConfig/info1', typeID);
   }
+  async getDeviceInfoBymac(mac: string, type: string) {
+    return await this.axiosHttp.post('/deviceInfo/getInfoByMac', { mac, type});
+  }
 }
