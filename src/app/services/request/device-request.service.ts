@@ -20,4 +20,7 @@ export class DeviceRequestService {
   async getDeviceInfoBymac(mac: string, type: string) {
     return await this.axiosHttp.post('/deviceInfo/getInfoByMac', { mac, type});
   }
+  async addUserDeviceInfo(param: any) {
+    return await this.axiosHttp.post('/userDeviceInfo/add', param);
+  }
 }

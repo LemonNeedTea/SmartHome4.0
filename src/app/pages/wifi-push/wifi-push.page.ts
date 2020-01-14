@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { EsptouchService } from '../../services/esptouch.service';
+import { ToolsService } from '../../services/tools.service';
 import { DeviceRequestService } from '../../services/request/device-request.service';
-import { ActionSheetController } from '@ionic/angular';
+import { ActionSheetController, NavController } from '@ionic/angular';
 
 @Component({
   selector: 'app-wifi-push',
@@ -16,7 +17,9 @@ export class WifiPushPage implements OnInit {
     private router: Router,
     private esptouch: EsptouchService,
     private actionSheetController: ActionSheetController,
-    private device: DeviceRequestService) {
+    private device: DeviceRequestService,
+    private navCtrl: NavController,
+    private tools: ToolsService) {
     this.queryParams = this.route.snapshot.queryParams; // queryParams.wifi queryParams.password
   }
   ngOnInit() {
@@ -35,11 +38,25 @@ export class WifiPushPage implements OnInit {
       this.presentActionSheet();
     });
   }
-  private addDevice(mac: string) {
-    this.device.getDeviceInfoBymac(mac, this.queryParams.code).then(res => {
+  private async addDevice(mac: string) {
+    this.device.getDeviceInfoBymac(mac, this.queryParams.code).then((res: any) => {
+      let param = {
+        deviceId: res.id,
+        name: this.queryParams.name,
+        roomId: 1,
+        sort: 1,
+      };
+      alert(JSON.stringify(param));
+      this.device.addUserDeviceInfo(param).then((res1: any) => {
+      }, err1 => {
+        this.tools.showToast('设备添加失败');
+      }).finally(() => {
+        this.navCtrl.navigateRoot('tabs/main');
+      });
       alert(JSON.stringify(res));
-    }, err => {
 
+    }, err => {
+      this.presentActionSheet();
     });
   }
   ngOnDestroy() {
@@ -62,7 +79,7 @@ export class WifiPushPage implements OnInit {
         text: 'Cancel',
         role: 'cancel',
         handler: () => {
-          this.router.navigateByUrl('tabs/main');
+          this.navCtrl.navigateRoot('tabs/main');
         }
       }]
     });
