@@ -3,6 +3,7 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { ServicesService } from '../../services/services.service';
 import { LoginRequestService } from '../../services/request/login-request.service';
+import { DeviceRequestService } from '../../services/request/device-request.service';
 import { ToastController } from '@ionic/angular';
 import { DragulaService } from 'ng2-dragula';
 @Component({
@@ -18,11 +19,13 @@ export class MainPage implements OnInit {
 
   todo = { value: '', color: '' };
   selectedQuadrant = 'q1';
+  deviceList = [];
   constructor(private router: Router,
     public services: ServicesService,
     private login: LoginRequestService,
     private dragulaService: DragulaService,
-    private toastController: ToastController) {
+    private toastController: ToastController,
+    private device: DeviceRequestService) {
     this.dragulaService.drag('bag')
       .subscribe(({ name, el, source }) => {// 拖动开始
         console.log('drag');
@@ -61,12 +64,15 @@ export class MainPage implements OnInit {
 
   ngOnInit() {
     this.logued();
+    this.device.getDeviceDetailList().then((res: any) => {
+      this.deviceList = res;
+    })
   }
 
 
 
   logued() {
-    this.login.checkToken();
+    // this.login.checkToken();
   }
 
   async signOut() {

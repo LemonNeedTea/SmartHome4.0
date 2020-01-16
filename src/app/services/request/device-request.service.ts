@@ -23,4 +23,8 @@ export class DeviceRequestService {
   async addUserDeviceInfo(param: any) {
     return await this.axiosHttp.post('/userDeviceInfo/add', param);
   }
+
+  async getDeviceDetailList() {
+    return await this.axiosHttp.post('/device/getDeviceDetailList', {});
+  }
 }
