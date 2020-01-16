@@ -58,7 +58,6 @@ export class AxiosService {
             this.nav.navigateRoot('/login');
 
           }
-          console.error(tempData);
           return Promise.reject(tempData);
         }
         return response.data;
