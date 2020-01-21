@@ -2,8 +2,7 @@ import { Injectable } from '@angular/core';
 import axios, { AxiosRequestConfig } from 'axios';
 import { LoadingController, ToastController, NavController } from '@ionic/angular';
 import { ToolsService } from './tools.service';
-import { ThemeService } from './theme.service';
-import { log } from 'util';
+import { ConfigConst } from '../common/confg-const';
 
 
 @Injectable({
@@ -17,7 +16,7 @@ export class AxiosService {
               private loading: LoadingController,
               private toastCtrl: ToastController,
               private nav: NavController) {
-    axios.defaults.baseURL = 'http://192.168.1.101:8888';
+    axios.defaults.baseURL = ConfigConst.WEB_URL;
     // 添加响应拦截器
     axios.interceptors.request.use(
       async (config: AxiosRequestConfig) => {
