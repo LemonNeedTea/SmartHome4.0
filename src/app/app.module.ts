@@ -27,6 +27,7 @@ export function HttpLoaderFactory(http: HttpClient) {
   entryComponents: [],
 
   imports: [BrowserModule, IonicModule.forRoot(), AppRoutingModule, DragulaModule.forRoot(),
+    HttpClientModule,
     TranslateModule.forRoot({
       loader: {
         provide: TranslateLoader,
@@ -47,24 +48,24 @@ export function HttpLoaderFactory(http: HttpClient) {
 })
 export class AppModule {
   // 默认语言
-  // private lang: any = 'zh';
+  private lang: any = 'zh';
 
-  // constructor(private platform: Platform, public translate: TranslateService) {
-  //   platform.ready().then(async () => {
-  //     // this.initTranslateConfig();
-  //   });
-  //   console.log('App start...');
-  // }
+  constructor(private platform: Platform, public translate: TranslateService) {
+    platform.ready().then(async () => {
+      this.initTranslateConfig();
+    });
+    console.log('App start...');
+  }
 
-  // public initTranslateConfig() {
-  //   console.log('initTranslateConfig...');
-  //   // 添加要支持的语言
-  //   this.translate.addLangs(['zh', 'en']);
-  //   // 设置默认语言
-  //   this.translate.setDefaultLang(this.lang);
-  //   // 语言切换处理
-  //   this.translate.use(this.lang).subscribe(() => {
-  //     console.log('语言切换=' + this.lang);
-  //   });
-  // }
+  public initTranslateConfig() {
+    console.log('initTranslateConfig...');
+    // 添加要支持的语言
+    this.translate.addLangs(['zh', 'en']);
+    // 设置默认语言
+    this.translate.setDefaultLang(this.lang);
+    // 语言切换处理
+    this.translate.use(this.lang).subscribe(() => {
+      console.log('语言切换=' + this.lang);
+    });
+  }
 }

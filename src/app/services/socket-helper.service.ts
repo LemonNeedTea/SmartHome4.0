@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { SocketService } from './socket.service';
 import { ToolsService } from './tools.service';
+import { promise } from 'protractor';
 
 @Injectable({
   providedIn: 'root'
@@ -12,19 +13,22 @@ export class SocketHelperService {
 
   startSocket() {
     return new Promise((resove, reject) => {
-      this.ws.createObservableSocket(this.tools.getToken()).subscribe({
-        next: res => this.socketMessageHandle(res),
-        complete: () => resove(true),
-        error: err => {
-          setTimeout(() => {
-            this.startSocket();
-          }, 5000);
-        }
+      this.ws.createObservableSocket(this.tools.getToken()).then(res => {
+        console.log(res);
+        this.ws.ws.onmessage = (event) => {
+          this.socketMessageHandle(JSON.parse(event.data));
+        };
+        resove(true);
+
+      }, err => {
+        console.log('error');
+        setTimeout(() => {
+          this.startSocket();
+        }, 5000);
       });
     });
-
-    // Variable.socketObject = this.socket;
   }
+
   login() {
     // 登录
     const data = {
