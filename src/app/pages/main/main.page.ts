@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import { ServicesService } from '../../services/services.service';
 import { LoginRequestService } from '../../services/request/login-request.service';
 import { DeviceRequestService } from '../../services/request/device-request.service';
+import { SocketHelperService } from '../../services/socket-helper.service';
 import { ToastController } from '@ionic/angular';
 import { DragulaService } from 'ng2-dragula';
 @Component({
@@ -25,7 +26,8 @@ export class MainPage implements OnInit {
     private login: LoginRequestService,
     private dragulaService: DragulaService,
     private toastController: ToastController,
-    private device: DeviceRequestService) {
+    private device: DeviceRequestService,
+    private socketHelper: SocketHelperService) {
     this.dragulaService.drag('bag')
       .subscribe(({ name, el, source }) => {// 拖动开始
         console.log('drag');
@@ -66,7 +68,7 @@ export class MainPage implements OnInit {
     this.logued();
     this.device.getDeviceDetailList().then((res: any) => {
       this.deviceList = res;
-    })
+    });
   }
 
 

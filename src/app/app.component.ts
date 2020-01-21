@@ -4,6 +4,9 @@ import { Platform } from '@ionic/angular';
 import { SplashScreen } from '@ionic-native/splash-screen/ngx';
 import { StatusBar } from '@ionic-native/status-bar/ngx';
 import { ThemeService } from './services/theme.service';
+import { SocketHelperService } from './services/socket-helper.service';
+// import { TranslateService } from '@ngx-translate/core';
+
 
 // import { WebSocketAPI } from './common/WebSocket';
 
@@ -21,7 +24,9 @@ export class AppComponent {
     private platform: Platform,
     private splashScreen: SplashScreen,
     private statusBar: StatusBar,
-    private theme: ThemeService
+    private theme: ThemeService,
+    // private translate: TranslateService,
+    private socketHelper: SocketHelperService
   ) {
     this.initializeApp();
     this.theme.initTheme();
@@ -31,6 +36,9 @@ export class AppComponent {
     this.platform.ready().then(() => {
       this.statusBar.styleDefault();
       this.splashScreen.hide();
+      this.socketHelper.startSocket().then(res => {
+        this.socketHelper.login();
+      });
     });
   }
   // ngOnInit() {

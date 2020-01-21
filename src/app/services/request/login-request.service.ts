@@ -3,6 +3,7 @@ import { AxiosService } from '../axios.service';
 import {ToolsService} from '../tools.service';
 import { ServicesService } from '../services.service';
 import { NavController } from '@ionic/angular';
+import { SocketHelperService } from '../../services/socket-helper.service';
 
 @Injectable({
   providedIn: 'root'
@@ -12,7 +13,8 @@ export class LoginRequestService {
   constructor(private axiosHttp: AxiosService,
               private tools: ToolsService,
               private services: ServicesService,
-              private nav: NavController) { }
+              private nav: NavController,
+              private socketHelper: SocketHelperService) { }
   /**
    * 获取登录验证码图片数据
    */
@@ -36,6 +38,7 @@ export class LoginRequestService {
       this.tools.setToken(res.token);
       // this.services.goto('/tabs/main');
       this.nav.navigateRoot('/tabs/main');
+      this.socketHelper.login();
     }).catch(err => {
       console.log(err) ;
     });
@@ -46,6 +49,7 @@ export class LoginRequestService {
   async logout() {
     return await this.axiosHttp.post('/logout', {}).then(res => {
       this.tools.logoutCleanStorage();
+      this.socketHelper.logout();
     });
   }
 }

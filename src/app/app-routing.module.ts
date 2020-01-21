@@ -25,6 +25,10 @@ const routes: Routes = [
   {
     path: 'wifi-push',
     loadChildren: () => import('./pages/wifi-push/wifi-push.module').then( m => m.WifiPushPageModule)
+  },
+  {
+    path: 'langset',
+    loadChildren: () => import('./pages/langset/langset.module').then( m => m.LangsetPageModule)
   }
 ];
 @NgModule({

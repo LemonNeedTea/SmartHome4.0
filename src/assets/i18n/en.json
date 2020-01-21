@@ -1,0 +1,14 @@
+{
+    "generic_en_language": "English",
+    "generic_zh_language": "Simplified Chinese",
+    "generic_goback": "Back",
+    "generic_start": "Go Now!",
+    "generic_update": "You must update the application!",
+    "generic_fail_login": "Login failed! Please try again.",
+    "generic_loading_login": "logging in...",
+    "generic_languageSwitch": "Language is switching...",
+    "generic_systemPrompt": "System prompt",
+    "generic_fail_http": "Failed to get data",
+    "generic_error_http": "System busy, please try again later",
+    "generic_error_network": "Network exception, unable to connect to server!"
+}

@@ -12,17 +12,18 @@ export class SocketService {
   constructor() {
 
   }
-  createObservableSocket(username: string): Observable<any> {
+  createObservableSocket(token: string): Observable<any> {
 
     return new Observable<any>(
       observable => {
-        if (!username) { return observable.complete(); }
+        if (!token) { return observable.error(); }
         if (this.ws) {
           this.ws.close();
           this.ws = null;
         }
         this.ws = new WebSocket(ConfigConst.SOCKET_URL);
         this.ws.onopen = d => {
+         observable.complete();
         };
         this.ws.onmessage = (event) => observable.next(JSON.parse(event.data));
         this.ws.onerror = (event) => {
@@ -30,7 +31,7 @@ export class SocketService {
         };
         this.ws.onclose = (event) => {
           observable.error('');
-        }
+        };
       }
     )
   }

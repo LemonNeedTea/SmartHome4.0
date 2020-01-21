@@ -1,0 +1,14 @@
+{
+    "generic_en_language": "英语",
+    "generic_zh_language": "简体中文",
+    "generic_goback": "返回",
+    "generic_start": "立即体验",
+    "generic_update": "您必须升级应用才能进行登录操作！",
+    "generic_fail_login": "登录失败，请重新登录！",
+    "generic_loading_login": "登录中...",
+    "generic_languageSwitch": "语言切换中...",
+    "generic_systemPrompt": "系统提示",
+    "generic_fail_http": "获取数据失败",
+    "generic_error_http": "系统繁忙，请稍后再试",
+    "generic_error_network": "网络异常，不能连接到服务器！"
+}
