@@ -52,6 +52,19 @@ export class SocketHelperService {
   }
   socketMessageHandle(data) {
     console.log(data);
+    if (!data || !data.type) { return; }
+    const type = data.type;
+    if (type === 'get') {
+
+    } else if (type === 'set') {
+
+    } else if (type === 'login') {
+
+    } else if (type === 'logout') {
+
+    } else {
+
+    }
 
   }
 }
