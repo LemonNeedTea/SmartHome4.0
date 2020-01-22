@@ -77,7 +77,7 @@ export class MainPage implements OnInit {
       console.log("我变化啦");
       console.log(this.globalService$.DeviceData);
     })
-    
+
   }
 
 
@@ -111,5 +111,9 @@ export class MainPage implements OnInit {
   }
   addDevice() {
     this.router.navigateByUrl('device-catalogue');
+  }
+  goDetail(device: any) {
+    this.router.navigate(['/thermostat'], { queryParams: device });
+
   }
 }

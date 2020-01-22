@@ -40,7 +40,7 @@
     <ion-grid>
         <ion-row dragula="bag">
             <ion-col size="4" *ngFor="let item of deviceList">
-                <ion-grid class="device">
+                <ion-grid class="device" (click)="goDetail(item)">
                     <ion-row>
                         <ion-text>{{item.name}}</ion-text>
                     </ion-row>

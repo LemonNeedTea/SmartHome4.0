@@ -29,6 +29,10 @@ const routes: Routes = [
   {
     path: 'langset',
     loadChildren: () => import('./pages/langset/langset.module').then( m => m.LangsetPageModule)
+  },
+  {
+    path: 'thermostat',
+    loadChildren: () => import('./pages/thermostat/thermostat.module').then( m => m.ThermostatPageModule)
   }
 ];
 @NgModule({
