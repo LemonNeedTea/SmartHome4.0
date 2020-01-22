@@ -1,15 +1,18 @@
 import { Injectable } from '@angular/core';
 import { SocketService } from './socket.service';
 import { ToolsService } from './tools.service';
-import { promise } from 'protractor';
+import { GlobalService } from './global.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class SocketHelperService {
 
+  ;
+
   constructor(private ws: SocketService,
-    private tools: ToolsService) { }
+    private tools: ToolsService,
+    private globalService$: GlobalService) { }
 
   startSocket() {
     return new Promise((resove, reject) => {
@@ -55,9 +58,11 @@ export class SocketHelperService {
     if (!data || !data.type) { return; }
     const type = data.type;
     if (type === 'get') {
+      this.globalService$.DeviceData[data.mac] = data.data;
 
+      this.globalService$.globalVar.next(data);
     } else if (type === 'set') {
-
+      
     } else if (type === 'login') {
 
     } else if (type === 'logout') {

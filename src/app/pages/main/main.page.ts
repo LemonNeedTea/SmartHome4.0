@@ -7,12 +7,15 @@ import { DeviceRequestService } from '../../services/request/device-request.serv
 import { SocketHelperService } from '../../services/socket-helper.service';
 import { ToastController } from '@ionic/angular';
 import { DragulaService } from 'ng2-dragula';
+import { GlobalService } from '../../services/global.service';
+
 @Component({
   selector: 'app-main',
   templateUrl: './main.page.html',
   styleUrls: ['./main.page.scss'],
 })
 export class MainPage implements OnInit {
+
 
   item: any;
   id: string;
@@ -27,7 +30,8 @@ export class MainPage implements OnInit {
     private dragulaService: DragulaService,
     private toastController: ToastController,
     private device: DeviceRequestService,
-    private socketHelper: SocketHelperService) {
+    private socketHelper: SocketHelperService,
+    private globalService$: GlobalService) {
     this.dragulaService.drag('bag')
       .subscribe(({ name, el, source }) => {// 拖动开始
         console.log('drag');
@@ -69,6 +73,11 @@ export class MainPage implements OnInit {
     this.device.getDeviceDetailList().then((res: any) => {
       this.deviceList = res;
     });
+    this.globalService$.globalVar.subscribe(d => {
+      console.log("我变化啦");
+      console.log(this.globalService$.DeviceData);
+    })
+    
   }
 
 
