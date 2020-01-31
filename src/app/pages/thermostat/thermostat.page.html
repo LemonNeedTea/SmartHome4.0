@@ -1,9 +1,23 @@
 <ion-header>
-  <ion-toolbar>
-    <ion-title>thermostat</ion-title>
+  <ion-toolbar color="light">
+    <ion-buttons slot="start">
+      <ion-back-button></ion-back-button>
+    </ion-buttons>
+    <ion-title></ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
+
+  <ion-textarea rows="6" cols="20" [(ngModel)]="text">
+
+
+  </ion-textarea>
+
+  <ion-input [(ngModel)]="code"></ion-input>
+  <ion-input  [(ngModel)]="value"></ion-input>
+  <ion-button (click)="onClick()">
+    发 送
+  </ion-button>
 
 </ion-content>

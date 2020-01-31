@@ -10,16 +10,19 @@ export class SocketHelperService {
 
   ;
 
-  constructor(private ws: SocketService,
-    private tools: ToolsService,
-    private globalService$: GlobalService) { }
+  constructor(private ws: SocketService, private tools: ToolsService, private globalService$: GlobalService) { }
 
   startSocket() {
     return new Promise((resove, reject) => {
       this.ws.createObservableSocket(this.tools.getToken()).then(res => {
         console.log(res);
         this.ws.ws.onmessage = (event) => {
-          this.socketMessageHandle(JSON.parse(event.data));
+          try {
+            // console.log(event.data);
+            this.socketMessageHandle(JSON.parse(event.data));
+          } catch (err) {
+            console.log(err);
+          }
         };
         resove(true);
 
@@ -62,7 +65,7 @@ export class SocketHelperService {
 
       this.globalService$.globalVar.next(data);
     } else if (type === 'set') {
-      
+
     } else if (type === 'login') {
 
     } else if (type === 'logout') {
@@ -71,5 +74,9 @@ export class SocketHelperService {
 
     }
 
+  }
+  sendMessage(data: any) {
+    data.token = this.tools.getToken();
+    this.ws.sendMessage(data);
   }
 }

@@ -6,6 +6,7 @@ import { StatusBar } from '@ionic-native/status-bar/ngx';
 import { ThemeService } from './services/theme.service';
 import { SocketHelperService } from './services/socket-helper.service';
 // import { TranslateService } from '@ngx-translate/core';
+import { Variable } from './common/variable';
 
 
 // import { WebSocketAPI } from './common/WebSocket';
@@ -39,6 +40,7 @@ export class AppComponent {
       this.socketHelper.startSocket().then(res => {
         this.socketHelper.login();
       });
+      Variable.socketObject = this.socketHelper;
     });
   }
   // ngOnInit() {

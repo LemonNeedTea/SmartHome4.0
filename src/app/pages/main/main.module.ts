@@ -7,6 +7,7 @@ import { DragulaModule } from 'ng2-dragula';
 import { IonicModule } from '@ionic/angular';
 
 import { MainPage } from './main.page';
+import { TranslateModule } from '@ngx-translate/core';
 
 const routes: Routes = [
   {
@@ -21,8 +22,9 @@ const routes: Routes = [
     FormsModule,
     IonicModule,
     RouterModule.forChild(routes),
-    DragulaModule
+    DragulaModule,
+    TranslateModule
   ],
   declarations: [MainPage]
 })
-export class MainPageModule {}
+export class MainPageModule { }

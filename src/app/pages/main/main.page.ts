@@ -74,8 +74,8 @@ export class MainPage implements OnInit {
       this.deviceList = res;
     });
     this.globalService$.globalVar.subscribe(d => {
-      console.log("我变化啦");
-      console.log(this.globalService$.DeviceData);
+      // console.log("我变化啦");
+      // console.log(this.globalService$.DeviceData);
     })
 
   }
