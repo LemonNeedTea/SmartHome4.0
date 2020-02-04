@@ -7,13 +7,15 @@ import { IonicModule } from '@ionic/angular';
 import { ThermostatPageRoutingModule } from './thermostat-routing.module';
 
 import { ThermostatPage } from './thermostat.page';
+import { TranslateModule } from '@ngx-translate/core';
 
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
     IonicModule,
-    ThermostatPageRoutingModule
+    ThermostatPageRoutingModule,
+    TranslateModule
   ],
   declarations: [ThermostatPage]
 })
