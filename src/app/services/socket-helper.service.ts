@@ -65,7 +65,10 @@ export class SocketHelperService {
 
       this.globalService$.globalVar.next(data);
     } else if (type === 'set') {
-
+      if(!data.success){
+        this.tools.showToast(data.msg);
+        this.tools.dismissLoading();
+      }
     } else if (type === 'login') {
 
     } else if (type === 'logout') {

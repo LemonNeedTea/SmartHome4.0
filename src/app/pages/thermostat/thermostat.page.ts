@@ -5,7 +5,8 @@ import { variable } from '@angular/compiler/src/output/output_ast';
 import * as ProgressBar from 'progressbar.js';
 import { GlobalService } from '../../services/global.service';
 import { Subject, Observable, Subscribable } from 'rxjs';
-import{ ToolsService } from '../../services/tools.service';
+import { ToolsService } from '../../services/tools.service';
+import { ModalController } from '@ionic/angular'
 
 @Component({
   selector: 'app-thermostat',
@@ -55,7 +56,6 @@ export class ThermostatPage implements OnInit {
   valve2: boolean;
   linkage: boolean;
   airSetInfo: object = {};
-  timeoutObj: any;
   coolOffline: number;
   hotUpperLimit: number;
   timer1Open: boolean;
@@ -68,7 +68,7 @@ export class ThermostatPage implements OnInit {
 
 
 
-  constructor(private route: ActivatedRoute, private globalService$: GlobalService,private tools: ToolsService) {
+  constructor(private route: ActivatedRoute, private globalService$: GlobalService, private tools: ToolsService, public modalController: ModalController) {
     this.queryParams = this.route.snapshot.queryParams;
     console.log(this.queryParams);
     this.id = this.queryParams.id;
@@ -436,6 +436,8 @@ export class ThermostatPage implements OnInit {
       this.modeKV = this.airTypeParam.airParam["mode"];
       this.speedKV = this.airTypeParam.airParam['speed'];
     }
+    this.setCircle();
+
     // 设备实时数据接收
     this.initDeviceData();
     this.deviceDataSubscribe= this.globalService$.globalVar.subscribe((res: any) => {
@@ -444,7 +446,6 @@ export class ThermostatPage implements OnInit {
       }
     });
 
-    this.setCircle();
 
   }
   initDeviceData() {
@@ -457,22 +458,27 @@ export class ThermostatPage implements OnInit {
     const deviceData=deviceDatas[this.mac];
     this.roomTempData = deviceData.temp_envi;
     this.temp = deviceData.temp_set;
+    if (this.setInfo.type === 'setTemp') { if (this.temp == this.setInfo.value) { this.dismissLoading(); } }
     this.keyboardLock = deviceData.key_lock;
     this.linkage = deviceData.state_link;// 联动
     this.valve1 = deviceData.state_water1;// 水阀1
     this.valve2 = deviceData.state_water2;// 水阀2
     this.open = this.tools.parseToBooleanByString(deviceData.switch_state) ;
+    if (this.setInfo.type === 'open') { if (this.open == this.setInfo.value) { this.dismissLoading(); } }
+
     this.speedMode = this.tools.parseToBooleanByString(deviceData.mode_fan) ;
     console.log(this.speedMode);
 
     const speedValue = deviceData.state_fan;
     this.getSpeedState(speedValue, deviceData.mode_fan);// 获取风速状态
     this.eco = this.tools.parseToBooleanByString(deviceData.mode_save);
+    if (this.setInfo.type === 'eco') { if (this.eco == this.setInfo.value) { this.dismissLoading(); } }
 
     this.hotUpperLimit = deviceData.hot_up;
     this.coolOffline = deviceData.cold_down;
 
     this.getModeState(deviceData.mode_work);// 获取模式状态
+    this.setCircleNum();
 
 
   }
@@ -488,9 +494,10 @@ export class ThermostatPage implements OnInit {
     console.log(params);
 
     Variable.socketObject.sendMessage(params);
+    this.tools.showLoading('');
   }
   getTempColumns() {
-    let t = [];
+    const t = [];
     for (let i = this.tempMin; i <= this.tempMax; i++) {
       t.push({ text: `${i}`, value: i });
     }
@@ -515,27 +522,19 @@ export class ThermostatPage implements OnInit {
       svgStyle: null,
       // boxShadow: '0 2px 6px 0 #4D95DF',
     });
-    this.setCircleNum();
+    // this.setCircleNum();
   }
   setCircleNum() {
     this.getTempColumns();
-    let num = (this.temp * 1 - this.tempMin * 1) / (this.tempMax * 1 - this.tempMin * 1);
+    const num = (this.temp * 1 - this.tempMin * 1) / (this.tempMax * 1 - this.tempMin * 1);
     this.barCircleObj.animate(num);
-    console.log(num);
-    
-
-
-
   }
   tempAdd() {
-    // debugger;
     this.temp = Number(this.temp);
     if (this.temp < this.tempMax) {
       this.temp++;
       this.setCircleNum();
-      // this.setTempoutTemp();
-      // this.setAirTemp();
-      // this.sendAir();
+      this.setTempoutTemp();
 
     }
 
@@ -550,7 +549,8 @@ export class ThermostatPage implements OnInit {
   }
   private setAirTemp() {
     // Variable.socketObject.sendMessage(this.monitorID, this.airSetInfo['setTemp'], Number(this.temp))
-    this.checkSetInfo('setTemp', this.temp);
+    this.controlDevice('temp_set',this.temp);
+     this.checkSetInfo('setTemp', this.temp);
 
   }
   tempSub() {
@@ -559,9 +559,7 @@ export class ThermostatPage implements OnInit {
     if (this.temp > this.tempMin) {
       this.temp--;
       this.setCircleNum();
-      // this.setAirTemp();
       this.setTempoutTemp();
-      // this.sendAir();
     }
   }
   changeTemp() {
@@ -581,6 +579,7 @@ export class ThermostatPage implements OnInit {
   setEco() {
     this.eco = !this.eco;
     // Variable.socketObject.sendMessage(this.monitorID, this.airSetInfo['eco'], this.eco ? 1 : 0)
+    this.controlDevice('mode_save',this.eco?1:0);
     this.checkSetInfo('eco', this.eco);
   }
   setSpeed(data: any) {
@@ -588,6 +587,7 @@ export class ThermostatPage implements OnInit {
     this.selectedSpped = data;
     // this.setAir(data['F_Mode'], data['F_Code']);
     // Variable.socketObject.sendMessage(this.monitorID, this.airSetInfo['speed'], data.F_paramsValue)
+    this.controlDevice('state_fan', data.F_paramsValue);
     this.checkSetInfo('speed', data.F_ID);
 
 
@@ -597,12 +597,20 @@ export class ThermostatPage implements OnInit {
     this.speedMode = false;
     // this.setAir(data['F_Mode'], data['F_Code']);
     // Variable.socketObject.sendMessage(this.monitorID, this.airSetInfo['speed'], 0)
+    this.controlDevice('state_fan',0)
     this.checkSetInfo('speedMode', true);
 
 
   }
 
-  setMode() {
+  async setMode() {
+    const modalObj = await this.modalController.create({
+      component: 'AirSettingModePage',
+      componentProps:{
+        Data: this.modeKV
+      }
+    });
+    return await modalObj.present();
     // let modalObj = this.modalCtrl.create('AirSettingModePage', { Data: this.modeKV });
     // modalObj.onDidDismiss(res => {
     //   if (res != null) {
@@ -627,14 +635,11 @@ export class ThermostatPage implements OnInit {
   checkSetInfo(type: string, value: any) {
     this.setInfo.type = type;
     this.setInfo.value = value;
-    this.timeoutObj = setTimeout(() => {
-      // this.dismissLoading();
-    }, 60000);
   }
   getSpeedState(speed: string, speedMode: string) {// 获取风速状态
     if (speedMode == '0') {
       this.speedMode = false;
-      // if (this.setInfo.type === 'speedMode') { this.dismissLoading(); }
+      if (this.setInfo.type === 'speedMode') { this.dismissLoading(); }
       this.selectedSpped = {};
     } else {
       let temp = {};
@@ -645,7 +650,7 @@ export class ThermostatPage implements OnInit {
         }
       });
       if (temp) {
-        // if (this.setInfo.type === 'speed') { if (temp["F_ID"] == this.setInfo.value) { this.dismissLoading(); } }
+        if (this.setInfo.type === 'speed') { if (temp["F_ID"] == this.setInfo.value) { this.dismissLoading(); } }
 
       }
       this.selectedSpped = temp;
@@ -676,6 +681,11 @@ export class ThermostatPage implements OnInit {
 
       }
     });
+  }
+  dismissLoading() {
+    this.setInfo.type = '';
+    this.setInfo.value = '';
+    this.tools.dismissLoading();
   }
 
 
