@@ -30,20 +30,20 @@
 <ion-content fullscreen>
   <div style="width: 100%;">
     <div class="room-temp-row">
-      <div class="room-temp">{{'室温'|translate}}&nbsp;&nbsp;22.3°C</div>
+      <div class="room-temp">{{'室温'|translate}}&nbsp;&nbsp;{{roomTempData}}°C</div>
     </div>
   </div>
   <ion-grid>
     <ion-row>
       <ion-col  size="6" class="col-clock">
-        <div *ngIf="keyboardLock">
+        <div *ngIf="keyboardLock | bool">
           <img src="../../assets/air/lock.png" />
           <div>键盘锁</div>
         </div>
 
       </ion-col>
       <ion-col  size="6" class="col-clock">
-        <div *ngIf="linkage">
+        <div *ngIf="linkage | bool">
           <img src="../../assets/air/connect.png" />
           <div>{{'联动'|translate}}</div>
         </div>
@@ -57,7 +57,7 @@
           <ion-icon name="add"></ion-icon>
         </button> -->
             <!-- <ion-button> -->
-              <ion-icon name="add"></ion-icon>
+              <ion-icon name="add" ></ion-icon>
             <!-- </ion-button> -->
 
  
@@ -85,15 +85,15 @@
       </ion-col>
 
 
-      <ion-col class="temp-sub"  size="2" [hidden]="!open" (click)="tempSub()">
+      <ion-col class="temp-sub"  size="2"  [hidden]="!open" (click)="tempSub()" >
         <!-- <button ion-button icon-only (click)="tempSub()"> -->
-          <ion-icon name="remove"></ion-icon>
+          <ion-icon name="remove" ></ion-icon>
         <!-- </button> -->
       </ion-col>
     </ion-row>
     <ion-row>
       <ion-col  size="6" class="col-clock">
-        <div *ngIf="valve1">
+        <div *ngIf="valve1  | bool">
 
           <img src="../../assets/air/valve.png" />
           <div>{{'水阀'|translate}}1</div>
@@ -101,7 +101,7 @@
 
       </ion-col>
       <ion-col  size="6" class="col-clock">
-        <div *ngIf="valve2">
+        <div *ngIf="valve2 | bool">
 
           <img src="../../assets/air/valve.png" />
           <div>{{'水阀'|translate}}2</div>
@@ -141,13 +141,13 @@
 </ion-content>
 <ion-footer>
   <ion-grid>
-    <ion-row class="speed" [hidden]="!open">
+    <ion-row class="speed" >
       <ion-col  size="4">
         {{'风速设定'|translate}}
       </ion-col>
       <ion-col  size="8">
         <ul>
-          <li [ngClass]="{'selected': speedMode}" (click)="setSpeedMode()">Au</li>
+          <li [ngClass]="{'selected': !speedMode}"  (click)="setSpeedMode()">自动</li>
           <li *ngFor="let item of speedKV" [ngClass]="{'selected': selectedSpped.F_ID==item.F_ID}"
             (click)="setSpeed(item)">{{item.F_ParamsName |translate}}</li>
           <!-- <li [ngClass]="{'selected': speedModel==0}" (click)="setSpeed(0)">自动</li>
@@ -162,10 +162,12 @@
         <ion-row>
           <ion-col  size="4">
             <div class="mode-div" [hidden]="!open">
-              <img *ngIf="true"  (click)="setMode()"
+              <img *ngIf="true"
+              [src]="'../../../assets/air/'+selectedMode.F_Icon" 
+               [ngClass]="selectedMode.F_Class" (click)="setMode()"
                 />
               <img *ngIf=" false" (click)="setMode()" />
-              <!-- <img src="../../assets/cool.png" (click)="setMode()"/> -->
+              {{selectedMode.F_ParamsName}}
               <!-- {{config.chinese?selectedMode.F_ParamsName:selectedMode.F_ParamsName_En}} -->
             </div>
 

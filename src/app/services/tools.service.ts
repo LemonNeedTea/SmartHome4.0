@@ -62,4 +62,16 @@ export class ToolsService {
    await this.storage.remove('token');
     await this.storage.remove('verify-token');
   }
+  parseToBooleanByString(data: string): boolean {
+    if (parseInt(data)) {
+      let n = parseInt(data);
+      if (n == 0) {
+        return false;
+      } else {
+        return true;
+      }
+    } else {
+      return false;
+    }
+  }
 }

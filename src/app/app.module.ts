@@ -12,6 +12,7 @@ import { DragulaModule } from 'ng2-dragula';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { TranslateLoader, TranslateModule, TranslateService } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
+// import { BoolPipe } from './pipes/bool.pipe';
 
 
 /**

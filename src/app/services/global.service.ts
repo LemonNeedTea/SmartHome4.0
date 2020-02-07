@@ -7,5 +7,7 @@ import { BehaviorSubject } from 'rxjs';
 export class GlobalService {
 
   public DeviceData: any = {};
+
+  
   public globalVar: BehaviorSubject<any[]> = new BehaviorSubject([]);
 }

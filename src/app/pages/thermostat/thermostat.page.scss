@@ -144,6 +144,7 @@ ion-button{
       width: 32px;
       line-height: 30px;
       text-align: center;
+      font-size: 15px;
     }
   }
 }
@@ -176,12 +177,19 @@ ion-button{
   }
 }
 
-.selected,
-.cool,
-.cool1 {
+.selected{
   background-color: var(--ion-color-primary) !important;
   border-color: var(--ion-color-primary) !important;
+  
 }
+.cool,
+.cool1 {
+   background-color:#52a1f3;
+  border-color:#52a1f3 !important;
+
+}
+
+
 
 // .cool{
 //   background: #ff9900;

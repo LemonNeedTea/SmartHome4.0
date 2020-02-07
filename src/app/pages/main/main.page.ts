@@ -73,10 +73,12 @@ export class MainPage implements OnInit {
     this.device.getDeviceDetailList().then((res: any) => {
       this.deviceList = res;
     });
-    this.globalService$.globalVar.subscribe(d => {
-      console.log("我变化啦");
-      console.log(this.globalService$.DeviceData);
-    })
+    // this.globalService$.globalVar.subscribe({
+    //   next: res => {
+    //     console.log('change');
+    //     console.log(res);
+    //   }
+    // });
 
   }
 

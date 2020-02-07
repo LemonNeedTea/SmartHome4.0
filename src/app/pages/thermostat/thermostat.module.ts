@@ -8,6 +8,7 @@ import { ThermostatPageRoutingModule } from './thermostat-routing.module';
 
 import { ThermostatPage } from './thermostat.page';
 import { TranslateModule } from '@ngx-translate/core';
+import { BoolPipe } from '../../pipes/bool.pipe';
 
 @NgModule({
   imports: [
@@ -17,6 +18,6 @@ import { TranslateModule } from '@ngx-translate/core';
     ThermostatPageRoutingModule,
     TranslateModule
   ],
-  declarations: [ThermostatPage]
+  declarations: [ThermostatPage, BoolPipe]
 })
 export class ThermostatPageModule {}
