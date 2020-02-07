@@ -2,7 +2,7 @@
     <ion-toolbar>
         <ion-buttons slot="start">
             <ion-button color='medium'>
-                <ion-text class="username"> 波的家庭波的家庭</ion-text>
+                <ion-text class="username">admin的家庭</ion-text>
                 <ion-icon name="arrow-forward"></ion-icon>
             </ion-button>
         </ion-buttons>
@@ -20,7 +20,7 @@
             <ion-col>
                 <ion-text color='medium' style="font-size: 12px;">
                     <ion-icon name="tablet-portrait"></ion-icon>
-                    2个设备 | 4个智能场景
+                    {{this.deviceList.length}}个设备 | 4个智能场景
                 </ion-text>
             </ion-col>
         </ion-row>
@@ -49,8 +49,10 @@
                     </ion-row>
                     <ion-row>
                         <img [src]="item.img" width="50" height="50">
-                        <span>
-                            <img src="../../../assets/icon/open.png" width="16" height="16">
+                        <span [ngClass]="{'open': item.open}">
+                            <img *ngIf="!item.open" src="../../../assets/icon/open.png" width="16" height="16">
+                            <img  *ngIf="item.open"  src="../../assets/check.png" width="16" height="16">
+                            
                         </span>
                     </ion-row>
                 </ion-grid>

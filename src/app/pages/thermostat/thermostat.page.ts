@@ -63,7 +63,7 @@ export class ThermostatPage implements OnInit {
   timer2Open: boolean;
   timer3Open: boolean;
   timer4Open: boolean;
-  tempTimeoutObj: any;
+  tempTimeoutObj: any=null;
   mac: string;
   deviceDataSubscribe: any;
 
@@ -82,6 +82,11 @@ export class ThermostatPage implements OnInit {
 
   ngOnDestroy(): void {
     this.deviceDataSubscribe.unsubscribe();
+    
+  }
+  ngAfterViewInit(): void {
+    //Called after ngAfterContentInit when the component's view has been initialized. Applies to components only.
+    //Add 'implements AfterViewInit' to the class.
     
   }
   ngOnInit() {
@@ -528,13 +533,14 @@ export class ThermostatPage implements OnInit {
   setCircleNum() {
     this.getTempColumns();
     const num = (this.temp * 1 - this.tempMin * 1) / (this.tempMax * 1 - this.tempMin * 1);
+    console.log(num);
     this.barCircleObj.animate(num);
   }
   tempAdd() {
     this.temp = Number(this.temp);
     if (this.temp < this.tempMax) {
       this.temp++;
-      this.setCircleNum();
+      // this.setCircleNum();
       this.setTempoutTemp();
 
     }
@@ -545,6 +551,7 @@ export class ThermostatPage implements OnInit {
       clearTimeout(this.tempTimeoutObj);
     }
     this.tempTimeoutObj = setTimeout(() => {
+      this.setCircleNum();
       this.setAirTemp();
     }, 500);
   }
@@ -559,7 +566,7 @@ export class ThermostatPage implements OnInit {
 
     if (this.temp > this.tempMin) {
       this.temp--;
-      this.setCircleNum();
+      // this.setCircleNum();
       this.setTempoutTemp();
     }
   }

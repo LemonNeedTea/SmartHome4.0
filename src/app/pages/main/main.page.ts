@@ -8,6 +8,7 @@ import { SocketHelperService } from '../../services/socket-helper.service';
 import { ToastController } from '@ionic/angular';
 import { DragulaService } from 'ng2-dragula';
 import { GlobalService } from '../../services/global.service';
+import { ToolsService } from '../../services/tools.service';
 
 @Component({
   selector: 'app-main',
@@ -24,6 +25,7 @@ export class MainPage implements OnInit {
   todo = { value: '', color: '' };
   selectedQuadrant = 'q1';
   deviceList = [];
+  deviceDataSubscribe: any;
   constructor(private router: Router,
     public services: ServicesService,
     private login: LoginRequestService,
@@ -31,7 +33,8 @@ export class MainPage implements OnInit {
     private toastController: ToastController,
     private device: DeviceRequestService,
     private socketHelper: SocketHelperService,
-    private globalService$: GlobalService) {
+    private globalService$: GlobalService,
+    private tools: ToolsService) {
     this.dragulaService.drag('bag')
       .subscribe(({ name, el, source }) => {// 拖动开始
         console.log('drag');
@@ -72,13 +75,27 @@ export class MainPage implements OnInit {
     this.logued();
     this.device.getDeviceDetailList().then((res: any) => {
       this.deviceList = res;
+      this.initData();
     });
-    // this.globalService$.globalVar.subscribe({
-    //   next: res => {
-    //     console.log('change');
-    //     console.log(res);
-    //   }
-    // });
+
+  }
+  initData() {
+    // 设备实时数据接收
+    this.initDeviceData();
+    this.deviceDataSubscribe = this.globalService$.globalVar.subscribe((res: any) => {
+      this.initDeviceData();
+    });
+  }
+  initDeviceData() {
+    const deviceDatas = this.globalService$.DeviceData;
+    if (!deviceDatas) {
+      return;
+    }
+    this.deviceList.forEach(res => {
+      if (deviceDatas[res.mac]){
+        res.open = this.tools.parseToBooleanByString(deviceDatas[res.mac].switch_state)  ;
+      }
+    })
 
   }
 
