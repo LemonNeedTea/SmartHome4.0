@@ -476,14 +476,13 @@ export class ThermostatPage implements OnInit {
 
 
   }
-  onClick() {
+  controlDevice(code:string,value:any) {
     const params = {
       type: 'set',
       mac: this.queryParams.mac,
       set: {
-        code: this.code,
-        // value: [this.value]
-        value: [this.value]
+        code,
+        value: [value]
       }
     };
     console.log(params);
@@ -575,7 +574,7 @@ export class ThermostatPage implements OnInit {
 
   setOpen() {
     this.open = !this.open;
-
+    this.controlDevice('switch_state',this.open?1:0)
     // Variable.socketObject.sendMessage(this.monitorID, this.airSetInfo['open'], this.open ? 1 : 0)
     this.checkSetInfo('open', this.open);
   }

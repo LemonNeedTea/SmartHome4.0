@@ -35,14 +35,14 @@
   </div>
   <ion-grid>
     <ion-row>
-      <ion-col  size="6" class="col-clock">
+      <ion-col size="6" class="col-clock">
         <div *ngIf="keyboardLock | bool">
           <img src="../../assets/air/lock.png" />
           <div>键盘锁</div>
         </div>
 
       </ion-col>
-      <ion-col  size="6" class="col-clock">
+      <ion-col size="6" class="col-clock">
         <div *ngIf="linkage | bool">
           <img src="../../assets/air/connect.png" />
           <div>{{'联动'|translate}}</div>
@@ -51,18 +51,20 @@
       </ion-col>
     </ion-row>
     <ion-row>
-    
-      <ion-col class="temp-add"  size="2" (click)="tempAdd()" [hidden]="!open">
+
+      <ion-col class="temp-add" size="2">
+        <div (click)="tempAdd()" [hidden]="!open">
+          <ion-icon name="add"></ion-icon>
+        </div>
         <!-- <button ion-button icon-only (click)="tempAdd()" [hidden]="!open">
           <ion-icon name="add"></ion-icon>
         </button> -->
-            <!-- <ion-button> -->
-              <ion-icon name="add" ></ion-icon>
-            <!-- </ion-button> -->
+        <!-- <ion-button> -->
+        <!-- </ion-button> -->
 
- 
+
       </ion-col>
-      <ion-col  size="8" style="display: flex;justify-content: center;align-items: center;">
+      <ion-col size="8" style="display: flex;justify-content: center;align-items: center;">
         <div id="circlebar" class="container">
           <div class="temp-show">
             <p><span>
@@ -70,13 +72,13 @@
                 <!-- <ion-multi-picker [multiPickerColumns]="tempColumns" cancelText="{{'取消' | translate}}"
                   doneText="{{'确定' | translate}}" [(ngModel)]="temp" (ngModelChange)="changeTemp()" [disabled]="!open">
                 </ion-multi-picker> -->
-                
+
               </span>°C</p>
             <p [hidden]="!open">
-              自动
+              {{selectedSpped.F_ParamsName?selectedSpped.F_ParamsName:'自动'}}
               <!-- {{(selectedSpped.F_ParamsName?selectedSpped.F_ParamsName:'自动') |translate}} -->
               &nbsp;&nbsp;
-              地暖模式
+              {{selectedMode.F_ParamsName}}
               <!-- {{config.chinese?selectedMode.F_ParamsName:selectedMode.F_ParamsName_En}} -->
             </p>
 
@@ -85,14 +87,16 @@
       </ion-col>
 
 
-      <ion-col class="temp-sub"  size="2"  [hidden]="!open" (click)="tempSub()" >
+      <ion-col class="temp-sub" size="2">
         <!-- <button ion-button icon-only (click)="tempSub()"> -->
-          <ion-icon name="remove" ></ion-icon>
-        <!-- </button> -->
+      <div (click)="tempSub()" [hidden]="!open">
+        <ion-icon name="remove"></ion-icon>
+
+      </div>
       </ion-col>
     </ion-row>
     <ion-row>
-      <ion-col  size="6" class="col-clock">
+      <ion-col size="6" class="col-clock">
         <div *ngIf="valve1  | bool">
 
           <img src="../../assets/air/valve.png" />
@@ -100,7 +104,7 @@
         </div>
 
       </ion-col>
-      <ion-col  size="6" class="col-clock">
+      <ion-col size="6" class="col-clock">
         <div *ngIf="valve2 | bool">
 
           <img src="../../assets/air/valve.png" />
@@ -109,26 +113,26 @@
 
       </ion-col>
     </ion-row>
-    <ion-row>
-      <ion-col  size="3" class="col-center">
+    <ion-row >
+      <ion-col size="3" class="col-center">
         <div class="timer-div" (click)="presentShowModal(1,'定时1')">
           <span [ngClass]="{'timer-close': !timer1Open}"></span>
           {{'定时'|translate}}1
         </div>
       </ion-col>
-      <ion-col  size="3" class="col-center">
+      <ion-col size="3" class="col-center">
         <div class="timer-div" (click)="presentShowModal(2,'定时2')">
           <span [ngClass]="{'timer-close': !timer2Open}"></span>
           {{'定时'|translate}}2
         </div>
       </ion-col>
-      <ion-col  size="3" class="col-center">
+      <ion-col size="3" class="col-center">
         <div class="timer-div" (click)="presentShowModal(3,'定时3')">
           <span [ngClass]="{'timer-close': !timer3Open}"></span>
           {{'定时'|translate}}3
         </div>
       </ion-col>
-      <ion-col  size="3" class="col-center">
+      <ion-col size="3" class="col-center">
         <div class="timer-div" (click)="presentShowModal(4,'定时4')">
           <span [ngClass]="{'timer-close': !timer4Open}"></span>
           {{'定时'|translate}}4
@@ -141,13 +145,13 @@
 </ion-content>
 <ion-footer>
   <ion-grid>
-    <ion-row class="speed" >
-      <ion-col  size="4">
+    <ion-row class="speed">
+      <ion-col size="4">
         {{'风速设定'|translate}}
       </ion-col>
-      <ion-col  size="8">
+      <ion-col size="8">
         <ul>
-          <li [ngClass]="{'selected': !speedMode}"  (click)="setSpeedMode()">自动</li>
+          <li [ngClass]="{'selected': !speedMode}" (click)="setSpeedMode()">自动</li>
           <li *ngFor="let item of speedKV" [ngClass]="{'selected': selectedSpped.F_ID==item.F_ID}"
             (click)="setSpeed(item)">{{item.F_ParamsName |translate}}</li>
           <!-- <li [ngClass]="{'selected': speedModel==0}" (click)="setSpeed(0)">自动</li>
@@ -160,25 +164,23 @@
     <ion-row>
       <ion-grid class="mode" [ngClass]="{'border-top-none': !open}">
         <ion-row>
-          <ion-col  size="4">
+          <ion-col size="4">
             <div class="mode-div" [hidden]="!open">
-              <img *ngIf="true"
-              [src]="'../../../assets/air/'+selectedMode.F_Icon" 
-               [ngClass]="selectedMode.F_Class" (click)="setMode()"
-                />
+              <img *ngIf="true" [src]="'../../../assets/air/'+selectedMode.F_Icon" [ngClass]="selectedMode.F_Class"
+                (click)="setMode()" />
               <img *ngIf=" false" (click)="setMode()" />
               {{selectedMode.F_ParamsName}}
               <!-- {{config.chinese?selectedMode.F_ParamsName:selectedMode.F_ParamsName_En}} -->
             </div>
 
           </ion-col>
-          <ion-col  size="4">
+          <ion-col size="4">
             <img src="../../assets/check.png" [ngClass]="{'selected': open}" (click)="setOpen()" />
 
 
             {{'开关'|translate}}
           </ion-col>
-          <ion-col  size="4" [hidden]="!open">
+          <ion-col size="4" [hidden]="!open">
             <img src="../../assets/air/eco.png" [ngClass]="{'eco-color': eco}" (click)='setEco()' />
 
 

@@ -13,16 +13,16 @@ export class AxiosService {
   isLoading = true;
   loader: any;
   constructor(private tools: ToolsService,
-              private loading: LoadingController,
-              private toastCtrl: ToastController,
-              private nav: NavController) {
+    private loading: LoadingController,
+    private toastCtrl: ToastController,
+    private nav: NavController) {
     axios.defaults.baseURL = ConfigConst.WEB_URL;
     // 添加响应拦截器
     axios.interceptors.request.use(
       async (config: AxiosRequestConfig) => {
         // 1.是否加载loading动画
         if (this.isLoading) {
-          this.tools.showLoading('Please wait...');
+          await this.tools.showLoading('Please wait...');
         }
         config.headers.Accept = '*/*';
         config.headers['Content-Type'] = 'application/json';
@@ -35,14 +35,14 @@ export class AxiosService {
       },
       async error => {
         // 请求失败处理
-        // this.tools.dismissLoading();
+        this.tools.dismissLoading();
         return Promise.reject(error);
       }
     );
     axios.interceptors.response.use(
       async response => {
 
-        // this.tools.dismissLoading();
+        this.tools.dismissLoading();
 
         const tempData = response.data;
         if (tempData.success) {
@@ -65,7 +65,7 @@ export class AxiosService {
         // 请求失败处理
         if (err.response.status === 401) {
           this.tools.showToast('非法访问，请重新登录');
-            this.nav.navigateRoot('/login');
+          this.nav.navigateRoot('/login');
 
         }
         return Promise.reject(err);
