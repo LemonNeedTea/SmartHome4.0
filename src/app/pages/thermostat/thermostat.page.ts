@@ -4,9 +4,10 @@ import { Variable } from '../../common/variable';
 import { variable } from '@angular/compiler/src/output/output_ast';
 import * as ProgressBar from 'progressbar.js';
 import { GlobalService } from '../../services/global.service';
-import { Subject, Observable, Subscribable } from 'rxjs';
+import { Subject, Observable, Subscribable, from } from 'rxjs';
 import { ToolsService } from '../../services/tools.service';
-import { ModalController } from '@ionic/angular'
+import { ModalController } from '@ionic/angular';
+import{ AirSettingModalPage} from '../modals/air-setting-modal/air-setting-modal.page'
 
 @Component({
   selector: 'app-thermostat',
@@ -605,12 +606,23 @@ export class ThermostatPage implements OnInit {
 
   async setMode() {
     const modalObj = await this.modalController.create({
-      component: 'AirSettingModePage',
+      component: AirSettingModalPage,
       componentProps:{
         Data: this.modeKV
       }
     });
-    return await modalObj.present();
+   modalObj.present();
+    // 模态框被关闭后回回调该方法 res 为返回值
+    modalObj.onDidDismiss().then((res:any) => {
+      res=res.data;
+      console.log(res);
+      if (res != null) {
+        this.selectedMode = res;
+        // Variable.socketObject.sendMessage(this.monitorID, this.airSetInfo['mode'], res.F_paramsValue)
+        this.controlDevice('mode_set', res.F_paramsValue);
+        this.checkSetInfo('mode', res.F_ID);
+      }
+    })
     // let modalObj = this.modalCtrl.create('AirSettingModePage', { Data: this.modeKV });
     // modalObj.onDidDismiss(res => {
     //   if (res != null) {
@@ -677,7 +689,7 @@ export class ThermostatPage implements OnInit {
           this.tempMax = 30;
         }
 
-        // if (this.setInfo.type === 'mode') { if (element.F_ID == this.setInfo.value) { this.dismissLoading(); } }
+        if (this.setInfo.type === 'mode') { if (element.F_ID == this.setInfo.value) { this.dismissLoading(); } }
 
       }
     });
