@@ -38,7 +38,7 @@ export class AppComponent {
       this.statusBar.styleDefault();
       this.splashScreen.hide();
       this.socketHelper.startSocket().then(res => {
-        this.socketHelper.login();
+        // this.socketHelper.login();
       });
       Variable.socketObject = this.socketHelper;
     });

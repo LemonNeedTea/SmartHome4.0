@@ -151,7 +151,7 @@
       </ion-col>
       <ion-col size="8">
         <ul>
-          <li [ngClass]="{'selected': !speedMode}" (click)="setSpeedMode()">自动</li>
+          <li [ngClass]="{'selected': !speedMode}" (click)="setSpeedMode()">自</li>
           <li *ngFor="let item of speedKV" [ngClass]="{'selected': selectedSpped.F_ID==item.F_ID}"
             (click)="setSpeed(item)">{{item.F_ParamsName |translate}}</li>
           <!-- <li [ngClass]="{'selected': speedModel==0}" (click)="setSpeed(0)">自动</li>
@@ -166,7 +166,7 @@
         <ion-row>
           <ion-col size="4">
             <div class="mode-div" [hidden]="!open">
-              <img *ngIf="true" [src]="'../../../assets/air/'+selectedMode.F_Icon" [ngClass]="selectedMode.F_Class"
+              <img *ngIf="selectedMode.F_Icon" [src]="'../../../assets/air/'+selectedMode.F_Icon" [ngClass]="selectedMode.F_Class"
                 (click)="setMode()" />
               <img *ngIf=" false" (click)="setMode()" />
               {{selectedMode.F_ParamsName}}

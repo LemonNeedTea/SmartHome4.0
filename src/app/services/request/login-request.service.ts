@@ -19,7 +19,7 @@ export class LoginRequestService {
    * 获取登录验证码图片数据
    */
   getVerificationCode() {
-    return this.axiosHttp.get('/verificationCode/getBase64Image', false);
+    return this.axiosHttp.get('/verificationCode/getBase64Image',{}, false);
   }
   /**
    * 登录

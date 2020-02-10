@@ -48,7 +48,10 @@
                         <ion-text>在线({{item.roomName}})</ion-text>
                     </ion-row>
                     <ion-row>
-                        <img [src]="item.img" width="50" height="50">
+                        <!-- <img [src]="item.img" width="50" height="50"> -->
+                        <ion-img [src]="item.img" style="height: 50px;width:50px;"></ion-img>
+                        <!-- <ion-img src="../../../assets/air.png" style="height: 50px;width:50px;"></ion-img> -->
+                        
                         <span [ngClass]="{'open': item.open}">
                             <img *ngIf="!item.open" src="../../../assets/icon/open.png" width="16" height="16">
                             <img  *ngIf="item.open"  src="../../assets/check.png" width="16" height="16">

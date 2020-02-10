@@ -35,14 +35,18 @@ export class AxiosService {
       },
       async error => {
         // 请求失败处理
+        if (this.isLoading) {
         this.tools.dismissLoading();
+        }
         return Promise.reject(error);
       }
     );
     axios.interceptors.response.use(
       async response => {
 
-        this.tools.dismissLoading();
+        if (this.isLoading) {
+          this.tools.dismissLoading();
+        }
 
         const tempData = response.data;
         if (tempData.success) {
@@ -62,6 +66,9 @@ export class AxiosService {
         return response.data;
       },
       async err => {
+        if (this.isLoading) {
+          this.tools.dismissLoading();
+        }
         // 请求失败处理
         if (err.response.status === 401) {
           this.tools.showToast('非法访问，请重新登录');
@@ -75,6 +82,8 @@ export class AxiosService {
 
   async get(url: string, params: any, isLoading = true) {
     this.isLoading = isLoading;
+          console.log(this.isLoading);
+
     return axios.get(url, params);
   }
   async getByID(url: string, id: any, isLoading = true) {

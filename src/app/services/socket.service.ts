@@ -28,6 +28,7 @@ export class SocketService {
         this.ws = new WebSocket(ConfigConst.SOCKET_URL);
         this.ws.onopen = d => {
           resolve('open');
+          
         };
         this.ws.onerror = (event) => {
           reject(event);

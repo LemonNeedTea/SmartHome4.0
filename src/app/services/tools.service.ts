@@ -40,10 +40,13 @@ export class ToolsService {
       message,
       duration: 30000
     });
-   await loader.present();
+   await loader.present().then(res=>{
+    //  console.log('present');
+
+   });
   }
    async dismissLoading() {
-    console.log('dismiss');
+    // console.log('dismiss');
    await this.loadingCtrl.dismiss();
   }
   /**˝

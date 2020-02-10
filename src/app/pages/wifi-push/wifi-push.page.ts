@@ -3,7 +3,8 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { EsptouchService } from '../../services/esptouch.service';
 import { ToolsService } from '../../services/tools.service';
 import { DeviceRequestService } from '../../services/request/device-request.service';
-import { ActionSheetController, NavController } from '@ionic/angular';
+import { ActionSheetController, NavController, AlertController } from '@ionic/angular';
+import { HttpHandler } from '@angular/common/http';
 
 @Component({
   selector: 'app-wifi-push',
@@ -19,7 +20,8 @@ export class WifiPushPage implements OnInit {
     private actionSheetController: ActionSheetController,
     private device: DeviceRequestService,
     private navCtrl: NavController,
-    private tools: ToolsService) {
+    private tools: ToolsService,
+    private alertController: AlertController) {
     this.queryParams = this.route.snapshot.queryParams; // queryParams.wifi queryParams.password
   }
   ngOnInit() {
@@ -38,22 +40,58 @@ export class WifiPushPage implements OnInit {
       this.presentActionSheet();
     });
   }
+  async presentAlertPrompt() {
+    return new Promise((resolve, reject) => {
+      this.alertController.create({
+        header: '设备名称',
+        inputs: [
+          {
+            name: 'name',
+            type: 'text',
+            placeholder: '名称'
+          }],
+        buttons: [
+          {
+            text: 'Cancel',
+            role: 'cancel',
+            cssClass: 'secondary',
+            handler: () => {
+              reject(false);
+            }
+          }, {
+            text: 'Ok',
+            handler: (res) => {
+              resolve(res.name);
+
+            }
+          }
+        ]
+      }).then(res => {
+        res.present();
+      });
+    });
+
+  }
   private async addDevice(mac: string) {
     this.device.getDeviceInfoBymac(mac, this.queryParams.code).then((res: any) => {
-      let param = {
-        deviceId: res.id,
-        name: this.queryParams.name,
-        roomId: 1,
-        sort: 1,
-      };
-      alert(JSON.stringify(param));
-      this.device.addUserDeviceInfo(param).then((res1: any) => {
-      }, err1 => {
-        this.tools.showToast('设备添加失败');
-      }).finally(() => {
-        this.navCtrl.navigateRoot('tabs/main');
-      });
-      alert(JSON.stringify(res));
+      this.presentAlertPrompt().then(data => {
+        const param = {
+          deviceId: res.id,
+          name: data ? data : this.queryParams.name,
+          roomId: 1,
+          sort: 1,
+        };
+        // alert(JSON.stringify(param));
+        this.device.addUserDeviceInfo(param).then((res1: any) => {
+        }, err1 => {
+          this.tools.showToast('设备添加失败');
+        }).finally(() => {
+          // this.navCtrl.navigateForward('tabs/main');
+          this.router.navigate(['tabs/main']);
+        });
+      })
+
+      // alert(JSON.stringify(res));
 
     }, err => {
       this.presentActionSheet();

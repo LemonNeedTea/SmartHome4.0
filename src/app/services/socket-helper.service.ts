@@ -16,6 +16,9 @@ export class SocketHelperService {
     return new Promise((resove, reject) => {
       this.ws.createObservableSocket(this.tools.getToken()).then(res => {
         console.log(res);
+        if(res === 'open'){
+          this.login();
+        }
         this.ws.ws.onmessage = (event) => {
           try {
             // console.log(event.data);
@@ -23,11 +26,11 @@ export class SocketHelperService {
           } catch (err) {
             console.log(err);
           }
-        };
+        } ;
         resove(true);
 
       }, err => {
-        console.log('error');
+        console.log('socket start error');
         setTimeout(() => {
           this.startSocket();
         }, 5000);

@@ -1,6 +1,6 @@
 
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import { ServicesService } from '../../services/services.service';
 import { LoginRequestService } from '../../services/request/login-request.service';
 import { DeviceRequestService } from '../../services/request/device-request.service';
@@ -9,6 +9,7 @@ import { ToastController } from '@ionic/angular';
 import { DragulaService } from 'ng2-dragula';
 import { GlobalService } from '../../services/global.service';
 import { ToolsService } from '../../services/tools.service';
+import { log } from 'util';
 
 @Component({
   selector: 'app-main',
@@ -34,7 +35,9 @@ export class MainPage implements OnInit {
     private device: DeviceRequestService,
     private socketHelper: SocketHelperService,
     private globalService$: GlobalService,
-    private tools: ToolsService) {
+    private tools: ToolsService,  
+    private route: ActivatedRoute,) {
+    // const queryParams = this.route.snapshot.queryParams; // queryParams.wifi queryParams.password
     this.dragulaService.drag('bag')
       .subscribe(({ name, el, source }) => {// 拖动开始
         console.log('drag');
@@ -72,6 +75,7 @@ export class MainPage implements OnInit {
   }
 
   ngOnInit() {
+    console.warn('ngOnInit')
     this.logued();
     this.device.getDeviceDetailList().then((res: any) => {
       this.deviceList = res;
@@ -79,6 +83,20 @@ export class MainPage implements OnInit {
     });
 
   }
+  ionViewDidEnter(){
+    // this.fresh();
+    console.log('ionViewDidEnter');
+
+  }
+  ionViewDidLeave(){
+    console.log('ionViewDidLeave');
+  }
+  fresh() {
+    this.device.getDeviceDetailList().then((res: any) => {
+      this.deviceList = res;
+    });
+  }
+
   initData() {
     // 设备实时数据接收
     this.initDeviceData();
@@ -92,8 +110,8 @@ export class MainPage implements OnInit {
       return;
     }
     this.deviceList.forEach(res => {
-      if (deviceDatas[res.mac]){
-        res.open = this.tools.parseToBooleanByString(deviceDatas[res.mac].switch_state)  ;
+      if (deviceDatas[res.mac]) {
+        res.open = this.tools.parseToBooleanByString(deviceDatas[res.mac].switch_state);
       }
     })
 
