@@ -87,7 +87,10 @@ export class WifiPushPage implements OnInit {
           this.tools.showToast('设备添加失败');
         }).finally(() => {
           // this.navCtrl.navigateForward('tabs/main');
-          this.router.navigate(['tabs/main']);
+          // this.router.navigate(['tabs/main']);
+          this.navCtrl.navigateRoot(['tabs/main']).then(res => {
+            location.reload();
+          });
         });
       })
 
@@ -117,7 +120,10 @@ export class WifiPushPage implements OnInit {
         text: 'Cancel',
         role: 'cancel',
         handler: () => {
-          this.navCtrl.navigateRoot('tabs/main');
+          // this.navCtrl.navigateRoot('tabs/main');
+          this.navCtrl.navigateRoot(['tabs/main']).then(res => {
+            location.reload();
+          });
         }
       }]
     });

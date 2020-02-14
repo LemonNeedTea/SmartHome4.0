@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Variable } from '../../common/variable';
 import { variable } from '@angular/compiler/src/output/output_ast';
 import * as ProgressBar from 'progressbar.js';
@@ -7,7 +7,7 @@ import { GlobalService } from '../../services/global.service';
 import { Subject, Observable, Subscribable, from } from 'rxjs';
 import { ToolsService } from '../../services/tools.service';
 import { ModalController } from '@ionic/angular';
-import{ AirSettingModalPage} from '../modals/air-setting-modal/air-setting-modal.page'
+import { AirSettingModalPage } from '../modals/air-setting-modal/air-setting-modal.page'
 
 @Component({
   selector: 'app-thermostat',
@@ -63,13 +63,13 @@ export class ThermostatPage implements OnInit {
   timer2Open: boolean;
   timer3Open: boolean;
   timer4Open: boolean;
-  tempTimeoutObj: any=null;
+  tempTimeoutObj: any = null;
   mac: string;
   deviceDataSubscribe: any;
 
 
 
-  constructor(private route: ActivatedRoute, private globalService$: GlobalService, private tools: ToolsService, public modalController: ModalController) {
+  constructor(private route: ActivatedRoute, private globalService$: GlobalService, private tools: ToolsService, public modalController: ModalController, private router: Router) {
     this.queryParams = this.route.snapshot.queryParams;
     console.log(this.queryParams);
     this.id = this.queryParams.id;
@@ -82,12 +82,12 @@ export class ThermostatPage implements OnInit {
 
   ngOnDestroy(): void {
     this.deviceDataSubscribe.unsubscribe();
-    
+
   }
   ngAfterViewInit(): void {
     //Called after ngAfterContentInit when the component's view has been initialized. Applies to components only.
     //Add 'implements AfterViewInit' to the class.
-    
+
   }
   ngOnInit() {
     this.airTypeParam = {
@@ -446,7 +446,7 @@ export class ThermostatPage implements OnInit {
 
     // 设备实时数据接收
     this.initDeviceData();
-    this.deviceDataSubscribe= this.globalService$.globalVar.subscribe((res: any) => {
+    this.deviceDataSubscribe = this.globalService$.globalVar.subscribe((res: any) => {
       if (res.mac && res.mac === this.mac) {
         this.initDeviceData();
       }
@@ -461,7 +461,7 @@ export class ThermostatPage implements OnInit {
     }
     console.log("我变化啦");
     console.log(deviceDatas[this.mac]);
-    const deviceData=deviceDatas[this.mac];
+    const deviceData = deviceDatas[this.mac];
     this.roomTempData = deviceData.temp_envi;
     this.temp = deviceData.temp_set;
     if (this.setInfo.type === 'setTemp') { if (this.temp == this.setInfo.value) { this.dismissLoading(); } }
@@ -469,10 +469,10 @@ export class ThermostatPage implements OnInit {
     this.linkage = deviceData.state_link;// 联动
     this.valve1 = deviceData.state_water1;// 水阀1
     this.valve2 = deviceData.state_water2;// 水阀2
-    this.open = this.tools.parseToBooleanByString(deviceData.switch_state) ;
+    this.open = this.tools.parseToBooleanByString(deviceData.switch_state);
     if (this.setInfo.type === 'open') { if (this.open == this.setInfo.value) { this.dismissLoading(); } }
 
-    this.speedMode = this.tools.parseToBooleanByString(deviceData.mode_fan) ;
+    this.speedMode = this.tools.parseToBooleanByString(deviceData.mode_fan);
     console.log(this.speedMode);
 
     const speedValue = deviceData.state_fan;
@@ -488,7 +488,7 @@ export class ThermostatPage implements OnInit {
 
 
   }
-  controlDevice(code:string,value:any) {
+  controlDevice(code: string, value: any) {
     const params = {
       type: 'set',
       mac: this.queryParams.mac,
@@ -557,8 +557,8 @@ export class ThermostatPage implements OnInit {
   }
   private setAirTemp() {
     // Variable.socketObject.sendMessage(this.monitorID, this.airSetInfo['setTemp'], Number(this.temp))
-    this.controlDevice('temp_set',this.temp);
-     this.checkSetInfo('setTemp', this.temp);
+    this.controlDevice('temp_set', this.temp);
+    this.checkSetInfo('setTemp', this.temp);
 
   }
   tempSub() {
@@ -580,14 +580,14 @@ export class ThermostatPage implements OnInit {
 
   setOpen() {
     this.open = !this.open;
-    this.controlDevice('switch_state',this.open?1:0)
+    this.controlDevice('switch_state', this.open ? 1 : 0)
     // Variable.socketObject.sendMessage(this.monitorID, this.airSetInfo['open'], this.open ? 1 : 0)
     this.checkSetInfo('open', this.open);
   }
   setEco() {
     this.eco = !this.eco;
     // Variable.socketObject.sendMessage(this.monitorID, this.airSetInfo['eco'], this.eco ? 1 : 0)
-    this.controlDevice('mode_save',this.eco?1:0);
+    this.controlDevice('mode_save', this.eco ? 1 : 0);
     this.checkSetInfo('eco', this.eco);
   }
   setSpeed(data: any) {
@@ -605,7 +605,7 @@ export class ThermostatPage implements OnInit {
     this.speedMode = false;
     // this.setAir(data['F_Mode'], data['F_Code']);
     // Variable.socketObject.sendMessage(this.monitorID, this.airSetInfo['speed'], 0)
-    this.controlDevice('state_fan',0)
+    this.controlDevice('state_fan', 0)
     this.checkSetInfo('speedMode', true);
 
 
@@ -614,14 +614,14 @@ export class ThermostatPage implements OnInit {
   async setMode() {
     const modalObj = await this.modalController.create({
       component: AirSettingModalPage,
-      componentProps:{
+      componentProps: {
         Data: this.modeKV
       }
     });
-   modalObj.present();
+    modalObj.present();
     // 模态框被关闭后回回调该方法 res 为返回值
-    modalObj.onDidDismiss().then((res:any) => {
-      res=res.data;
+    modalObj.onDidDismiss().then((res: any) => {
+      res = res.data;
       console.log(res);
       if (res != null) {
         this.selectedMode = res;
@@ -706,6 +706,8 @@ export class ThermostatPage implements OnInit {
     this.setInfo.value = '';
     this.tools.dismissLoading();
   }
-
+  goMorePage() {
+    this.router.navigate(['/thermostat-detail'], { queryParams: this.queryParams });
+  }
 
 }

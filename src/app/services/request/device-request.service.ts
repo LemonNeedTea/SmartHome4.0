@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { AxiosService } from '../axios.service';
-import {ToolsService} from '../tools.service';
+import { ToolsService } from '../tools.service';
 
 @Injectable({
   providedIn: 'root'
@@ -15,10 +15,10 @@ export class DeviceRequestService {
     return await this.axiosHttp.post('/device/getProductList', {});
   }
   async getInfoByTypeID(typeID: number) {
-    return await  this.axiosHttp.getByID('/deviceConfig/info1', typeID);
+    return await this.axiosHttp.getByID('/deviceConfig/info1', typeID);
   }
   async getDeviceInfoBymac(mac: string, type: string) {
-    return await this.axiosHttp.post('/deviceInfo/getInfoByMac', { mac, type});
+    return await this.axiosHttp.post('/deviceInfo/getInfoByMac', { mac, type });
   }
   async addUserDeviceInfo(param: any) {
     return await this.axiosHttp.post('/userDeviceInfo/add', param);
@@ -26,5 +26,8 @@ export class DeviceRequestService {
 
   async getDeviceDetailList() {
     return await this.axiosHttp.post('/device/getDeviceDetailList', {});
+  }
+  async deleteDevice(mac: string) {
+    return await this.axiosHttp.postByID('/userDeviceInfo/deleteByMac', mac);
   }
 }

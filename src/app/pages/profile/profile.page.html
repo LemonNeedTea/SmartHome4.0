@@ -3,12 +3,12 @@
 
         <ion-title mode="ios" color="primary"></ion-title>
 
-        <ion-buttons slot="end">
+        <!-- <ion-buttons slot="end">
             <ion-button (click)="goedit()">
                 <ion-icon color="primary" name="more" slot="icon-only"></ion-icon>
 
             </ion-button>
-        </ion-buttons>
+        </ion-buttons> -->
 
     </ion-toolbar>
 </ion-header>
@@ -44,11 +44,11 @@
                 <ion-toggle (ionChange)="update($event)" slot="end" color="primary" [(ngModel)]="darkMode"></ion-toggle>
             </ion-item>
 
-            <ion-item>
+            <!-- <ion-item>
                 <ion-icon color="primary" slot="start" name="notifications"></ion-icon>
                 Notifications
-            </ion-item>
-            <ion-item>
+            </ion-item> -->
+            <!-- <ion-item>
                 <ion-icon color="tertiary" slot="start" name="mail-unread"></ion-icon>
                 News
                 <ion-toggle slot="end" color="primary"></ion-toggle>
@@ -61,13 +61,13 @@
             <ion-item>
                 <ion-icon color="success" slot="start" name="help"></ion-icon>
                 Help center
-            </ion-item>
+            </ion-item> -->
             <ion-item (click)="signOut()">
                 <ion-icon color="danger" slot="start" name="log-out"></ion-icon>
                 Logout
             </ion-item>
         </ion-list>
-        <br>
+        <!-- <br>
         <br>
         <br>
         <br>
@@ -75,10 +75,10 @@
         <p style="color: gray; font-size: 13px" text-center bold>User id : {{ uid }} </p>
 
         <br>
-        <br>
+        <br> -->
     </div>
 
-    <div class="form" text-center *ngIf="!empty">
+    <!-- <div class="form" text-center *ngIf="!empty">
 
 
 
@@ -97,7 +97,7 @@
             </ion-row>
         </ion-grid>
 
-    </div>
+    </div> -->
 
 
 

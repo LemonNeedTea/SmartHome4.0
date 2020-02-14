@@ -33,6 +33,10 @@ const routes: Routes = [
   {
     path: 'thermostat',
     loadChildren: () => import('./pages/thermostat/thermostat.module').then( m => m.ThermostatPageModule)
+  },
+  {
+    path: 'thermostat-detail',
+    loadChildren: () => import('./pages/thermostat-detail/thermostat-detail.module').then( m => m.ThermostatDetailPageModule)
   }
 ];
 @NgModule({
