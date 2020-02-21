@@ -7,7 +7,7 @@ import { ThemeService } from './services/theme.service';
 import { SocketHelperService } from './services/socket-helper.service';
 // import { TranslateService } from '@ngx-translate/core';
 import { Variable } from './common/variable';
-
+import { CodePush, InstallMode, SyncStatus } from '@ionic-native/code-push/ngx';
 
 // import { WebSocketAPI } from './common/WebSocket';
 
@@ -27,7 +27,8 @@ export class AppComponent {
     private statusBar: StatusBar,
     private theme: ThemeService,
     // private translate: TranslateService,
-    private socketHelper: SocketHelperService
+    private socketHelper: SocketHelperService,
+    private codePush: CodePush
   ) {
     this.initializeApp();
     this.theme.initTheme();
@@ -37,6 +38,7 @@ export class AppComponent {
     this.platform.ready().then(() => {
       this.statusBar.styleDefault();
       this.splashScreen.hide();
+      this.checkCodePush(); //Use the plugin always after platform.ready()
       this.socketHelper.startSocket().then(res => {
         // this.socketHelper.login();
       });
@@ -63,4 +65,22 @@ export class AppComponent {
   //   this.greeting = message;
   //   console.log(message);
   // }
+  checkCodePush() {
+    this.codePush.sync({
+      updateDialog: {
+       appendReleaseDescription: true,
+       descriptionPrefix: "\n\nChange log:\n"   
+      },
+      installMode: InstallMode.IMMEDIATE
+   }).subscribe(
+     (data) => {
+      console.log('CODE PUSH SUCCESSFUL: ' + data);
+      
+     },
+     (err) => {
+      console.log('CODE PUSH ERROR: ' + err);
+      
+     }
+   );
+  }
 }

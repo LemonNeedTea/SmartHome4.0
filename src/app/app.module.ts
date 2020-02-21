@@ -13,7 +13,7 @@ import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { TranslateLoader, TranslateModule, TranslateService } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 // import { BoolPipe } from './pipes/bool.pipe';
-
+import { CodePush } from '@ionic-native/code-push/ngx';
 
 /**
  * 导出加载函数
@@ -42,8 +42,9 @@ export function HttpLoaderFactory(http: HttpClient) {
   providers: [
     StatusBar,
     SplashScreen,
+    CodePush,
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
-    TranslateService
+    TranslateService,
   ],
   bootstrap: [AppComponent]
 })
