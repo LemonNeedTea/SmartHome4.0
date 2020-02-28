@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { AxiosService } from '../axios.service';
-import {ToolsService} from '../tools.service';
+import { ToolsService } from '../tools.service';
 import { ServicesService } from '../services.service';
 import { NavController } from '@ionic/angular';
 import { SocketHelperService } from '../../services/socket-helper.service';
@@ -11,15 +11,15 @@ import { SocketHelperService } from '../../services/socket-helper.service';
 export class LoginRequestService {
 
   constructor(private axiosHttp: AxiosService,
-              private tools: ToolsService,
-              private services: ServicesService,
-              private nav: NavController,
-              private socketHelper: SocketHelperService) { }
+    private tools: ToolsService,
+    private services: ServicesService,
+    private nav: NavController,
+    private socketHelper: SocketHelperService) { }
   /**
    * 获取登录验证码图片数据
    */
   getVerificationCode() {
-    return this.axiosHttp.get('/verificationCode/getBase64Image',{}, false);
+    return this.axiosHttp.get('/verificationCode/getBase64Image', {}, false);
   }
   /**
    * 登录
@@ -40,7 +40,7 @@ export class LoginRequestService {
       this.nav.navigateRoot('/tabs/main');
       this.socketHelper.login();
     }).catch(err => {
-      console.log(err) ;
+      console.log(err);
     });
   }
   checkToken() {
@@ -51,5 +51,21 @@ export class LoginRequestService {
       this.tools.logoutCleanStorage();
       this.socketHelper.logout();
     });
+  }
+
+  async register(username, password) {
+    return await this.axiosHttp.post('/sysUser/add', {
+      "departmentId": 1,
+      "gender": 1,
+      "head": "string",
+      "password": password,
+      "phone": "13016978120",
+      "remark": "string",
+      "roleId": 1,
+      "salt": "1122",
+      "state": 1,
+      "username": username
+    });
+
   }
 }

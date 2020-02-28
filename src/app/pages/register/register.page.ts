@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 
 import { Router } from '@angular/router';
 import { AlertController } from '@ionic/angular';
+import { LoginRequestService } from '../../services/request/login-request.service';
 
 @Component({
   selector: 'app-register',
@@ -17,7 +18,7 @@ export class RegisterPage {
   passwordType = 'password';
   passwordIcon = 'eye-off';
 
-  constructor( public rout: Router , public alertController: AlertController) { }
+  constructor( public rout: Router , public alertController: AlertController,public login: LoginRequestService) { }
 
 
 
@@ -29,6 +30,11 @@ export class RegisterPage {
       this.errorpassIguales();
       this.rout.navigate(['/register']);
     } else {
+      this.login.register(email,password).then(res=>{
+        this.goLogin();
+      },err=>{
+        // this.error('register error');
+      })
       // try {
       //   await this.afr.auth.createUserWithEmailAndPassword(email, password).then(data => {
       //     console.log(data);
