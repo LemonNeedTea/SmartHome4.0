@@ -24,6 +24,19 @@ export class ToolsService {
   cleanToken() {
     this.storage.remove('token');
   }
+  setUserName(username: string) {
+    this.storage.set('smarthome4.0-username', username);
+  }
+  getUserName() {
+    try {
+      return this.storage.get('smarthome4.0-username');
+    } catch (err) {
+      return null;
+    }
+  }
+  cleanUserName() {
+    this.storage.remove('smarthome4.0-username');
+  }
   setVerifyToken(token: string) {
     this.storage.set('verify-token', token);
   }

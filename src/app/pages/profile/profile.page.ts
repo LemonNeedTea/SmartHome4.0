@@ -5,6 +5,7 @@ import { Router } from '@angular/router';
 import { ServicesService } from '../../services/services.service';
 import { ThemeService } from '../../services/theme.service';
 import { LoginRequestService } from '../../services/request/login-request.service';
+import { ToolsService } from '../../services/tools.service';
 
 
 @Component({
@@ -19,10 +20,12 @@ export class ProfilePage implements OnInit {
   anuncios: any;
   empty: boolean;
   darkMode: boolean;
+  username: string;
   constructor(private nav: NavController,
               private services: ServicesService,
               private theme: ThemeService,
               private login: LoginRequestService,
+              private tools: ToolsService,
     private router: Router) {
 
   }
@@ -47,6 +50,8 @@ export class ProfilePage implements OnInit {
 
   getLogueado() {
     this.getProfile(this.uid);
+   this.username  = this.tools.getUserName();
+
     // this.aut.authState
     //   .subscribe(
     //     user => {

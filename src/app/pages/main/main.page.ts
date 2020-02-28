@@ -27,6 +27,7 @@ export class MainPage implements OnInit {
   selectedQuadrant = 'q1';
   deviceList = [];
   deviceDataSubscribe: any;
+  username: string;
   constructor(private router: Router,
     public services: ServicesService,
     private login: LoginRequestService,
@@ -75,7 +76,7 @@ export class MainPage implements OnInit {
   }
 
   ngOnInit() {
-    console.warn('ngOnInit')
+
     this.logued();
     this.device.getDeviceDetailList().then((res: any) => {
       this.deviceList = res;
@@ -121,6 +122,7 @@ export class MainPage implements OnInit {
 
   logued() {
     // this.login.checkToken();
+   this.username  = this.tools.getUserName();
   }
 
   async signOut() {

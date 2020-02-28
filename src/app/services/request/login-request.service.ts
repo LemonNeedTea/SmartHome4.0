@@ -37,6 +37,7 @@ export class LoginRequestService {
       // 成功保存token
       this.tools.setToken(res.token);
       // this.services.goto('/tabs/main');
+      this.tools.setUserName(username);
       this.nav.navigateRoot('/tabs/main');
       this.socketHelper.login();
     }).catch(err => {
@@ -50,6 +51,7 @@ export class LoginRequestService {
     return await this.axiosHttp.post('/logout', {}).then(res => {
       this.tools.logoutCleanStorage();
       this.socketHelper.logout();
+      this.tools.cleanUserName();
     });
   }
 
