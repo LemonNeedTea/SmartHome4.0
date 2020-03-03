@@ -8,11 +8,16 @@ import { DeviceRequestService } from '../../services/request/device-request.serv
 })
 export class ModeEditPage implements OnInit {
   urlImage: string;
+  deviceList=[];
   constructor(public device: DeviceRequestService) {
     this.urlImage = 'http://localhost:24310//resource/202003031633372.jpeg';
    }
 
   ngOnInit() {
+    this.device.getDeviceDetailList().then((res: any) => {
+      this.deviceList = res;
+      console.log(this.deviceList);
+    });
   }
 
   onUpload(e) {
