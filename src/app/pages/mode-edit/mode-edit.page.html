@@ -1,0 +1,24 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-back-button slot="start" color=""></ion-back-button>
+    <ion-title>mode-edit</ion-title>
+    <ion-buttons slot="end">
+      <ion-button color="primary" (click)='save()'>保 存</ion-button>  
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content fullscreen>
+  <div class="mode-img">
+  <!-- <img *ngIf="img && !urlImage" src="{{img}}" class="circle">  -->
+  <img *ngIf="urlImage"  [src]="urlImage" class="mode-show-img"> 
+  <img *ngIf="!urlImage"  src="../../../assets/mode/con-mode-getup.png" > 
+
+  <label class="mode-img-button">
+  <img src='../../../assets/photo.svg' />
+    <input id="file-upload" style="display: none;" type="file" accept=".png, .jpg"
+      (change)="onUpload($event)" />
+
+  </label>
+  </div>
+</ion-content>

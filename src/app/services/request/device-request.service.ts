@@ -29,5 +29,8 @@ export class DeviceRequestService {
   }
   async deleteDevice(mac: string) {
     return await this.axiosHttp.postByID('/userDeviceInfo/deleteByMac', mac);
+  } 
+   async upload(file:FormData) {
+    return await this.axiosHttp.post('/upload/', file);
   }
 }

@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
+
 
 @Component({
   selector: 'app-smart',
@@ -8,7 +10,7 @@ import { Component, OnInit } from '@angular/core';
 export class SmartPage implements OnInit {
   modeHeight:any;
   
-  constructor() { }
+  constructor(public router: Router) { }
 
   ngOnInit() {
 
@@ -16,6 +18,9 @@ export class SmartPage implements OnInit {
   ionViewDidEnter() {
     let htmlWidth = document.documentElement.clientWidth || document.body.clientWidth;
     this.modeHeight = `${(htmlWidth ) / 2.3}px`;
+  }
+  editMode() {
+    this.router.navigate(['mode-edit']);
   }
 
 

@@ -110,3 +110,9 @@
   --ion-color-base: transparent !important;
   --border-color:transparent !important;
 }
+.mode-show-img {
+  width:100%;
+  max-height: 200px;
+  min-height: 100px; 
+  object-fit:cover;
+}

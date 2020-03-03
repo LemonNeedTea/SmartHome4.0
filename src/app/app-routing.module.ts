@@ -41,6 +41,10 @@ const routes: Routes = [
   {
     path: 'thermostat-detail',
     loadChildren: () => import('./pages/thermostat-detail/thermostat-detail.module').then( m => m.ThermostatDetailPageModule)
+  },
+  {
+    path: 'mode-edit',
+    loadChildren: () => import('./pages/mode-edit/mode-edit.module').then( m => m.ModeEditPageModule)
   }
 ];
 @NgModule({
