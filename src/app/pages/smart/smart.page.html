@@ -1,9 +1,22 @@
 <ion-header>
   <ion-toolbar>
-    <ion-title>smart</ion-title>
+    <ion-title>智能模式</ion-title>
   </ion-toolbar>
 </ion-header>
 
-<ion-content padding>
+<ion-content style="padding-bottom: 60px">
+
+  <ion-item no-padding no-margin style="border-radius: 5px; margin:10px;">
+    <div class="mode-item" [ngStyle]="{ 'height' :modeHeight,'backgroundImage': 'url(http://localhost:24310//resource/mode/con-mode-getup.png)'}"
+         >
+        <div class="drag" [ngClass]="{'mode-item-header-active': true}">
+            <div class="mode-item-header" (click)="goModeSetting(mode)">回家模式</div>
+            <div class="mode-item-footer" (click)="setMode(mode,$event)">执行</div>
+        </div>
+    </div>
+  </ion-item>
+
+
+
 
 </ion-content>

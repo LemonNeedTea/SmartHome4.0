@@ -6,10 +6,19 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./smart.page.scss'],
 })
 export class SmartPage implements OnInit {
-
+  modeHeight:any;
+  
   constructor() { }
 
   ngOnInit() {
+
   }
+  ionViewDidEnter() {
+    let htmlWidth = document.documentElement.clientWidth || document.body.clientWidth;
+    this.modeHeight = `${(htmlWidth ) / 2.3}px`;
+  }
+
+
+  
 
 }
