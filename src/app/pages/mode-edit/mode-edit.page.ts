@@ -29,7 +29,7 @@ export class ModeEditPage implements OnInit {
       this.isEdit = true;
     } else {
       this.title = '新增模式';
-      this.urlImage = 'http://localhost:24310//resource/app/mode/con-mode-getup.png';
+      this.urlImage = 'http://218.206.104.2:24310//resource/app/mode/con-mode-getup.png';
     }
 
 
