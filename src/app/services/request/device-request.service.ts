@@ -33,4 +33,8 @@ export class DeviceRequestService {
    async upload(file:FormData) {
     return await this.axiosHttp.post('/upload/', file);
   }
+
+  async addUserModeAndDetail(param: any) {
+    return await this.axiosHttp.post('/userMode/addmode', param);
+  }
 }
