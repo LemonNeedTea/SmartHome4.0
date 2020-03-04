@@ -3,7 +3,7 @@ import { DeviceRequestService } from '../../services/request/device-request.serv
 import { ToolsService } from '../../services/tools.service';
 import UserMode from '../../models/UserMode';
 import { ActivatedRoute, Router } from '@angular/router';
-import { NavController } from '@ionic/angular';
+import { NavController, AlertController } from '@ionic/angular';
 
 @Component({
   selector: 'app-mode-edit',
@@ -14,15 +14,45 @@ export class ModeEditPage implements OnInit {
   urlImage: string;
   deviceList = [];
   name: string;
-  constructor(public device: DeviceRequestService, public tools: ToolsService, public router: Router, public params: ActivatedRoute,public nav: NavController) {
-    this.urlImage = 'http://localhost:24310//resource/app/mode/con-mode-getup.png';
+  queryParams: any;
+  title: string;
+  isEdit: boolean = false;
+  constructor(public device: DeviceRequestService, public tools: ToolsService, public router: Router, public route: ActivatedRoute, public nav: NavController, public alertController: AlertController) {
+    this.queryParams = this.route.snapshot.queryParams;
+
+    console.log(this.queryParams);
+
+    if (this.queryParams.id) {
+      this.title = '编辑模式';
+      this.name = this.queryParams.name;
+      this.urlImage = this.queryParams.img;
+      this.isEdit = true;
+    } else {
+      this.title = '新增模式';
+      this.urlImage = 'http://localhost:24310//resource/app/mode/con-mode-getup.png';
+    }
+
+
   }
 
-  ngOnInit() {
-    this.device.getDeviceDetailList().then((res: any) => {
+  async ngOnInit() {
+    await this.device.getDeviceDetailList().then((res: any) => {
       this.deviceList = res;
       console.log(this.deviceList);
     });
+
+    if (this.isEdit) {
+      await this.device.getUserModeDetailList(this.queryParams.id).then((res: any) => {
+        res.map((item: any, index: number) => {
+          this.deviceList.map((device: any) => {
+            if (device.id === item.deviceId) {
+              device.mode_setting = item.paramValue == '0' ? false : true;
+            }
+          })
+        })
+      })
+    }
+
   }
 
   onUpload(e) {
@@ -36,11 +66,10 @@ export class ModeEditPage implements OnInit {
   }
   save() {
     if (this.checkParam()) {
-      let userMode={
+      let userMode = {
         name: this.name,
-        selected:false,
+        selected: false,
         img: this.urlImage,
-        userId: 1
       };
 
       let userModeDetailList = [];
@@ -48,12 +77,14 @@ export class ModeEditPage implements OnInit {
         userModeDetailList.push({
           "deviceId": item.id,
           "paramCode": 'switch_state',
-          "paramValue": item.mode_setting ? true : false
+          "paramValue": item.mode_setting ? 1 : 0
         })
       });
       this.device.addUserModeAndDetail({ userMode, userModeDetailList }).then(res => {
-        // this.router.navigateByUrl('/tabs/smart');
-        this.nav.back();
+        this.router.navigateByUrl('/tabs/smart').then(res => {
+          location.reload();
+        });
+        // this.nav.back();
       })
     }
   }
@@ -65,6 +96,35 @@ export class ModeEditPage implements OnInit {
     }
 
     return true;
+  }
+
+  async delete() {
+      const alert = await this.alertController.create({
+        header: '确认',
+        message: '<strong>删除模式？</strong>',
+        buttons: [
+          {
+            text: 'Cancel',
+            role: 'cancel',
+            cssClass: 'secondary',
+            handler: (blah) => {
+              console.log('Confirm Cancel: blah');
+            }
+          }, {
+            text: 'Okay',
+            handler: () => {
+              console.log('Confirm Okay');
+              // this.device.deleteDevice(this.mac).then(res => {
+              //   this.navCtrl.navigateRoot(['tabs/main']).then(res => {
+              //     location.reload();
+              //   });
+              // });
+            }
+          }
+        ]
+      });
+  
+      await alert.present();
   }
 
 }

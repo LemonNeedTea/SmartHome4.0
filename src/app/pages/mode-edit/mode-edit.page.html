@@ -1,9 +1,9 @@
 <ion-header>
   <ion-toolbar>
     <ion-back-button slot="start" color=""></ion-back-button>
-    <ion-title>mode-edit</ion-title>
-    <ion-buttons slot="end">
-      <ion-button color="primary" (click)='save()'>保 存</ion-button>
+    <ion-title>{{title}}</ion-title>
+    <ion-buttons slot="end" *ngIf="isEdit">
+      <ion-button color="danger" (click)='delete()'>删 除</ion-button>
     </ion-buttons>
   </ion-toolbar>
 </ion-header>
@@ -41,3 +41,7 @@
   </ion-list>
 
 </ion-content>
+
+<ion-footer>
+  <ion-button  expand="block" round strong  (click)='save()'>  保 存 </ion-button>
+</ion-footer>

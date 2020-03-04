@@ -11,11 +11,11 @@
 
 <ion-content style="padding-bottom: 60px">
 
-  <ion-item no-padding no-margin style="border-radius: 5px; margin:10px;">
-    <div class="mode-item" [ngStyle]="{ 'height' :modeHeight,'backgroundImage': 'url(http://localhost:24310//resource/mode/con-mode-getup.png)'}"
+  <ion-item no-padding no-margin style="border-radius: 5px; margin:10px;" *ngFor="let item of modeList">
+    <div class="mode-item"  [ngStyle]="{ 'height' :modeHeight,'backgroundImage': 'url('+item.img+')'}"
          >
-        <div class="drag" [ngClass]="{'mode-item-header-active': true}">
-            <div class="mode-item-header" (click)="goModeSetting(mode)">回家模式</div>
+        <div class="drag" [ngClass]="{'mode-item-header-active': item.selected}">
+            <div class="mode-item-header" (click)="editMode(item)">{{item.name}}</div>
             <div class="mode-item-footer" (click)="setMode(mode,$event)">执行</div>
         </div>
     </div>

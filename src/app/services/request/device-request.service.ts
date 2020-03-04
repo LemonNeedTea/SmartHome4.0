@@ -29,12 +29,19 @@ export class DeviceRequestService {
   }
   async deleteDevice(mac: string) {
     return await this.axiosHttp.postByID('/userDeviceInfo/deleteByMac', mac);
-  } 
-   async upload(file:FormData) {
+  }
+  async upload(file: FormData) {
     return await this.axiosHttp.post('/upload/', file);
   }
 
   async addUserModeAndDetail(param: any) {
     return await this.axiosHttp.post('/userMode/addmode', param);
+  }
+
+  async getUserModeList() {
+    return await this.axiosHttp.post('/userMode/getPageListByID', { current: 1, size: 100})
+  }
+  async getUserModeDetailList(modeId: number) {
+    return await this.axiosHttp.getByID('/userModeDetail/infoByModeId', modeId)
   }
 }
