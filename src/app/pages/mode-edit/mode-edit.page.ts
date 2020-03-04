@@ -47,6 +47,7 @@ export class ModeEditPage implements OnInit {
           this.deviceList.map((device: any) => {
             if (device.id === item.deviceId) {
               device.mode_setting = item.paramValue == '0' ? false : true;
+              device.detail_id = item.id;
             }
           })
         })
@@ -72,15 +73,26 @@ export class ModeEditPage implements OnInit {
         img: this.urlImage,
       };
 
+      if (this.isEdit) {
+        userMode['id'] = this.queryParams.id;
+        userMode['userId'] = this.queryParams.userId;
+        userMode.selected = this.queryParams.selected;
+      }
+
       let userModeDetailList = [];
       this.deviceList.map((item: any, index: number) => {
-        userModeDetailList.push({
+        let temp = {
           "deviceId": item.id,
           "paramCode": 'switch_state',
           "paramValue": item.mode_setting ? 1 : 0
-        })
+        };
+        if (this.isEdit) {
+          temp['id'] = item.detail_id;
+          temp['modeId'] = this.queryParams.id ;
+        }
+        userModeDetailList.push(temp);
       });
-      this.device.addUserModeAndDetail({ userMode, userModeDetailList }).then(res => {
+      this.device.addUserModeAndDetail({ userMode, userModeDetailList,edit: this.isEdit }).then(res => {
         this.router.navigateByUrl('/tabs/smart').then(res => {
           location.reload();
         });
@@ -99,32 +111,32 @@ export class ModeEditPage implements OnInit {
   }
 
   async delete() {
-      const alert = await this.alertController.create({
-        header: '确认',
-        message: '<strong>删除模式？</strong>',
-        buttons: [
-          {
-            text: 'Cancel',
-            role: 'cancel',
-            cssClass: 'secondary',
-            handler: (blah) => {
-              console.log('Confirm Cancel: blah');
-            }
-          }, {
-            text: 'Okay',
-            handler: () => {
-              console.log('Confirm Okay');
-              // this.device.deleteDevice(this.mac).then(res => {
-              //   this.navCtrl.navigateRoot(['tabs/main']).then(res => {
-              //     location.reload();
-              //   });
-              // });
-            }
+    const alert = await this.alertController.create({
+      header: '确认',
+      message: '<strong>删除模式？</strong>',
+      buttons: [
+        {
+          text: 'Cancel',
+          role: 'cancel',
+          cssClass: 'secondary',
+          handler: (blah) => {
+            console.log('Confirm Cancel: blah');
           }
-        ]
-      });
-  
-      await alert.present();
+        }, {
+          text: 'Okay',
+          handler: () => {
+            console.log('Confirm Okay');
+            this.device.deleteMode(this.queryParams.id).then(res => {
+              this.nav.navigateRoot(['tabs/smart']).then(res => {
+                location.reload();
+              });
+            });
+          }
+        }
+      ]
+    });
+
+    await alert.present();
   }
 
 }
