@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 
-import { Platform } from '@ionic/angular';
+import { Platform, LoadingController } from '@ionic/angular';
 import { SplashScreen } from '@ionic-native/splash-screen/ngx';
 import { StatusBar } from '@ionic-native/status-bar/ngx';
 import { ThemeService } from './services/theme.service';
@@ -21,6 +21,7 @@ export class AppComponent {
   // webSocketAPI: WebSocketAPI;
   // greeting: any;
   // name: string;
+  loading: any;
   constructor(
     private platform: Platform,
     private splashScreen: SplashScreen,
@@ -28,7 +29,8 @@ export class AppComponent {
     private theme: ThemeService,
     // private translate: TranslateService,
     private socketHelper: SocketHelperService,
-    private codePush: CodePush
+    private codePush: CodePush,
+    private loadingController: LoadingController
   ) {
     this.initializeApp();
     this.theme.initTheme();
@@ -66,21 +68,38 @@ export class AppComponent {
   //   console.log(message);
   // }
   checkCodePush() {
+    const downloadProgress = (progress) => {
+      // console.log(progress);
+     let percent = (parseInt(progress.receivedBytes)/parseInt(progress.totalBytes)).toFixed(2)
+      this.presentLoading(percent);
+
+      // console.log(`Downloaded ${progress.receivedBytes} of ${progress.totalBytes}`);
+    }
     this.codePush.sync({
       updateDialog: {
-       appendReleaseDescription: true,
-       descriptionPrefix: "\n\nChange log:\n"   
+        appendReleaseDescription: true,
+        descriptionPrefix: "\n\nChange log:\n"
       },
       installMode: InstallMode.IMMEDIATE
-   }).subscribe(
-     (data) => {
-      console.log('CODE PUSH SUCCESSFUL: ' + data);
-      
-     },
-     (err) => {
-      console.log('CODE PUSH ERROR: ' + err);
-      
-     }
-   );
+    }, downloadProgress).subscribe(
+      (data) => {
+        console.log('CODE PUSH SUCCESSFUL: ' + data);
+
+      },
+      (err) => {
+        console.log('CODE PUSH ERROR: ' + err);
+
+      }
+    );
+  }
+  async presentLoading(data) {
+    if (!this.loading) {
+      this.loading = await this.loadingController.create({
+        message: '正在更新...0%',
+      });
+      await this.loading.present();
+    }else{
+      this.loading.message = `正在更新...${data}%`;
+    }
   }
 }
