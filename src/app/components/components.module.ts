@@ -1,6 +1,8 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { MyLoopComponent } from './my-loop/my-loop.component'
+import { MyLoopComponent } from './my-loop/my-loop.component';
+import { IonicModule } from '@ionic/angular';
+import { FormsModule } from '@angular/forms';
 
 const coms = [MyLoopComponent]
 const PAGES_COMPONENTS = [
@@ -8,14 +10,16 @@ const PAGES_COMPONENTS = [
 ];
 
 @NgModule({
-  declarations: [
+  declarations:
     PAGES_COMPONENTS
-  ],
-  exports: [
+  ,
+  exports:
     PAGES_COMPONENTS
-  ],
+  ,
   imports: [
-    CommonModule
+    CommonModule,
+    IonicModule,
+    FormsModule
   ]
 })
 export class ComponentsModule { }
