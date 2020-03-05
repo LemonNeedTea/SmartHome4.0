@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { StorageService } from './storage.service';
 import { LoadingController, ToastController } from '@ionic/angular';
 import { async } from '@angular/core/testing';
+import * as Moment from 'moment';
 
 @Injectable({
   providedIn: 'root'
@@ -90,5 +91,14 @@ export class ToolsService {
     } else {
       return false;
     }
+  }
+    /**
+   * 将小时、分钟转换成字符串 00:00
+   * @param hour 
+   * @param minute 
+   */
+  getTime(hour: string, minute: string) {
+    let str = `${hour ? hour : 0}: ${minute ? minute : 0}`
+    return Moment(str, "HH:mm").format("HH:mm");
   }
 }
