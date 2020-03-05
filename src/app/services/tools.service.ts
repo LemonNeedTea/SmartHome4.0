@@ -54,14 +54,14 @@ export class ToolsService {
       message,
       duration: 30000
     });
-   await loader.present().then(res=>{
-    //  console.log('present');
+    await loader.present().then(res => {
+      //  console.log('present');
 
-   });
+    });
   }
-   async dismissLoading() {
+  async dismissLoading() {
     // console.log('dismiss');
-   await this.loadingCtrl.dismiss();
+    await this.loadingCtrl.dismiss();
   }
   /**˝
  // tslint:disable-next-line: jsdoc-format
@@ -92,11 +92,11 @@ export class ToolsService {
       return false;
     }
   }
-    /**
-   * 将小时、分钟转换成字符串 00:00
-   * @param hour 
-   * @param minute 
-   */
+  /**
+ * 将小时、分钟转换成字符串 00:00
+ * @param hour 
+ * @param minute 
+ */
   getTime(hour: string, minute: string) {
     let str = `${hour ? hour : 0}: ${minute ? minute : 0}`
     return Moment(str, "HH:mm").format("HH:mm");
@@ -110,5 +110,46 @@ export class ToolsService {
       addStr += '0';
     }
     return addStr += data;
+  }
+  getNumberByArr(data: any) {
+    let result: number = 0;
+    if (!data) return result;
+    let temp = [];
+    temp[0] = data[0];
+    temp[1] = data[6];
+    temp[2] = data[5];
+    temp[3] = data[4];
+    temp[4] = data[3];
+    temp[5] = data[2];
+    temp[6] = data[1];
+    let length = temp.length;
+    for (let index = 0; index < length; index++) {
+      const element = temp[index];
+      if (element >= 1) {
+        result += Math.pow(2, length - 1 - index);
+      }
+
+    }
+    return result;
+  }
+  getSendControl(data: any, strLength = 18) {
+    let num = 0;
+    let arr = new Array();
+    for (const item in data) {
+      let temp = data[item];
+      if (temp instanceof Array) {
+        temp.forEach(ele => {
+          arr.push(ele);
+        });
+      }
+      else {
+        if (!Number(temp)) {
+          temp = 0;
+        }
+        arr.push(temp);
+      }
+    }
+    return arr;
+
   }
 }

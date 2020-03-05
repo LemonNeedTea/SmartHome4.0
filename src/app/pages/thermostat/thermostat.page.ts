@@ -723,7 +723,8 @@ export class ThermostatPage implements OnInit {
       componentProps: {
         mode,speed,
         titleNum:id,
-        deviceRealData: this.deviceRealData
+        deviceRealData: this.deviceRealData,
+        mac: this.queryParams.mac
       }
     });
     return await modal.present();

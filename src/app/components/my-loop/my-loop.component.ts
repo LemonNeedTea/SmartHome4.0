@@ -32,7 +32,9 @@ export class MyLoopComponent implements OnInit {
           }
         }
       }
-      this.loop = temp;
+      if(JSON.stringify(this.loop) !== JSON.stringify(temp)){
+        this.loop = temp;
+      }
     } else {
       this.loop = v;
 
@@ -93,8 +95,9 @@ export class MyLoopComponent implements OnInit {
     }
     return result;
   }
-  change() {
+  change(loop:any) {
     if (this.isTrans == '1') {
+
       let result = this.getReturnData();
       for (const key in this.loop) {
         if (this.loop.hasOwnProperty(key)) {
@@ -108,5 +111,6 @@ export class MyLoopComponent implements OnInit {
     }
 
   }
+
 
 }

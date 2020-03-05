@@ -1,17 +1,20 @@
-import { Component, OnInit,Input } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { ModalController } from '@ionic/angular';
 import { ToolsService } from '../../../services/tools.service';
+import { airSettingTimerParams } from '../../../models/AirTimer';
+import { Variable } from '../../../common/variable';
+
 @Component({
   selector: 'app-thermostat-timer',
   templateUrl: './thermostat-timer.page.html',
   styleUrls: ['./thermostat-timer.page.scss'],
 })
 export class ThermostatTimerPage implements OnInit {
-modeColumns=[];
-tempMin: number = 15;
-tempMax: number = 30;
-tempColumns: any = [];
-modeModal: any;
+  modeColumns = [];
+  tempMin: number = 15;
+  tempMax: number = 30;
+  tempColumns: any = [];
+  modeModal: any;
   speedModal: any;
   tempModal: any;
   startDate: any;
@@ -20,15 +23,16 @@ modeModal: any;
   stopDate1: any;
   loop: Array<number>;
 
-@Input() mode: Array<any>;
-@Input() speed: Array<any>;
-@Input() titleNum: number;
-@Input() deviceRealData: any;
+  @Input() mode: Array<any>;
+  @Input() speed: Array<any>;
+  @Input() titleNum: number;
+  @Input() mac: string;
+  @Input() deviceRealData: any;
 
 
-  constructor( public modalCtrl: ModalController, public tools: ToolsService) {
+  constructor(public modalCtrl: ModalController, public tools: ToolsService) {
 
-   }
+  }
 
   ngOnInit() {
     this.getTempColumns();
@@ -60,15 +64,52 @@ modeModal: any;
   getTimerFnData() {
     const data = this.deviceRealData;
     const num = this.titleNum;
-    let loopData = data[`timing_week`+num];
+    let loopData = data[`timing_week` + num];
     this.loop = this.getBinaryArr(loopData);
-    this.startDate =[data[`timing_start${num}_hour1`],data[`timing_start${num}_minute1`]] ;
-    this.stopDate = [data[`timing_stop${num}_hour1`],data[`timing_stop${num}_minute1`]] ;
-    this.startDate1 = [data[`timing_start${num}_hour2`],data[`timing_start${num}_minute2`]] ;
-    this.stopDate1 = [data[`timing_stop${num}_hour2`],data[`timing_stop${num}_minute2`]] ;
+    this.startDate = [data[`timing_start${num}_hour1`], data[`timing_start${num}_minute1`]];
+    this.stopDate = [data[`timing_stop${num}_hour1`], data[`timing_stop${num}_minute1`]];
+    this.startDate1 = [data[`timing_start${num}_hour2`], data[`timing_start${num}_minute2`]];
+    this.stopDate1 = [data[`timing_stop${num}_hour2`], data[`timing_stop${num}_minute2`]];
     this.modeModal = data[`timing_mode${num}`];
     this.tempModal = data[`timing_temp${num}`];
 
+  }
+  save() {
+    this.getSettingParams();
+  }
+  getSettingParams() {
+    let params = new airSettingTimerParams();
+    params.code = this.titleNum-1;
+    params.loop = this.tools.getNumberByArr(this.loop);
+    params.startDate = this.startDate;
+    params.startDate1 = this.startDate1;
+
+    params.stopDate = this.stopDate;
+    params.stopDate1 = this.stopDate1;
+    params.mode = this.modeModal;
+    params.speed = '0';
+    params.temp = this.tempModal;
+    const controlData = this.tools.getSendControl(params, 13);
+    this.controlDevice('timing', controlData);
+    setTimeout(() => {
+      this.tools.dismissLoading();
+      this.dismiss();
+    }, 2000);
+  }
+
+  controlDevice(code: string, value: any) {
+    const params = {
+      type: 'set',
+      mac: this.mac,
+      set: {
+        code,
+        value: value
+      }
+    };
+    console.log(params);
+
+    Variable.socketObject.sendMessage(params);
+    this.tools.showLoading('');
   }
   getBinaryArr(num: any): any {
     let arr: Array<number> = [];
