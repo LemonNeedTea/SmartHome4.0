@@ -82,9 +82,10 @@ export class ThermostatTimerPage implements OnInit {
     params.code = this.titleNum-1;
     params.loop = this.tools.getNumberByArr(this.loop);
     params.startDate = this.startDate;
-    params.startDate1 = this.startDate1;
 
     params.stopDate = this.stopDate;
+    params.startDate1 = this.startDate1;
+
     params.stopDate1 = this.stopDate1;
     params.mode = this.modeModal;
     params.speed = '0';
