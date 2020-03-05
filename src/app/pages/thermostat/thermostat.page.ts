@@ -68,6 +68,7 @@ export class ThermostatPage implements OnInit {
   tempTimeoutObj: any = null;
   mac: string;
   deviceDataSubscribe: any;
+  deviceRealData:any;
 
 
 
@@ -464,6 +465,7 @@ export class ThermostatPage implements OnInit {
     console.log("我变化啦");
     console.log(deviceDatas[this.mac]);
     const deviceData = deviceDatas[this.mac];
+    this.deviceRealData = deviceData;
     this.roomTempData = deviceData.temp_envi;
     this.temp = deviceData.temp_set;
     if (this.setInfo.type === 'setTemp') { if (this.temp == this.setInfo.value) { this.dismissLoading(); } }
@@ -713,8 +715,16 @@ export class ThermostatPage implements OnInit {
   }
 
   async presentShowModal(id: number, name: string) {
+    let mode = this.airTypeParam.airParam.mode;
+    let speed = this.airTypeParam.airParam.speed;
+
     const modal = await this.modalController.create({
-      component: ThermostatTimerPage
+      component: ThermostatTimerPage,
+      componentProps: {
+        mode,speed,
+        titleNum:id,
+        deviceRealData: this.deviceRealData
+      }
     });
     return await modal.present();
   }

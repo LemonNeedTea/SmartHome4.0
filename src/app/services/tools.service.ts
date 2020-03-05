@@ -101,4 +101,14 @@ export class ToolsService {
     let str = `${hour ? hour : 0}: ${minute ? minute : 0}`
     return Moment(str, "HH:mm").format("HH:mm");
   }
+
+  padStart(data: string, num: number, str: string): string {
+    if (data.length >= num) return data;
+    let num1 = num - data.length;
+    let addStr = '';
+    for (let i = 0; i < num1; i++) {
+      addStr += '0';
+    }
+    return addStr += data;
+  }
 }

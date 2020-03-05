@@ -1,0 +1,7 @@
+<ion-item>
+  <ion-label>{{name}}</ion-label>
+  <ion-select  interface="alert" okText="确定" cancelText="取消" (ngModelChange)="change()"
+    [(ngModel)]="loop">
+    <ion-select-option *ngFor="let item of dataList" [value]="item.key">{{item.value}}</ion-select-option>
+  </ion-select>
+</ion-item>
