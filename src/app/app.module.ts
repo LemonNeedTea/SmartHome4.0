@@ -14,6 +14,7 @@ import { TranslateLoader, TranslateModule, TranslateService } from '@ngx-transla
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 // import { BoolPipe } from './pipes/bool.pipe';
 import { CodePush } from '@ionic-native/code-push/ngx';
+import { ComponentsModule } from './components/components.module';
 
 /**
  * 导出加载函数
@@ -25,7 +26,9 @@ export function HttpLoaderFactory(http: HttpClient) {
 
 @NgModule({
   declarations: [AppComponent],
-  entryComponents: [],
+  entryComponents: [
+    
+  ],
 
   imports: [BrowserModule, IonicModule.forRoot(), AppRoutingModule, DragulaModule.forRoot(),
     HttpClientModule,
@@ -35,7 +38,8 @@ export function HttpLoaderFactory(http: HttpClient) {
         useFactory: HttpLoaderFactory,
         deps: [HttpClient]
       }
-    })],
+    }),
+    ComponentsModule],
   exports: [
     TranslateModule
   ],

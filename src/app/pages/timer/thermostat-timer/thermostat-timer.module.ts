@@ -8,12 +8,15 @@ import { ThermostatTimerPageRoutingModule } from './thermostat-timer-routing.mod
 
 import { ThermostatTimerPage } from './thermostat-timer.page';
 
+import { ComponentsModule } from '../../../components/components.module';
+
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
     IonicModule,
-    ThermostatTimerPageRoutingModule
+    ComponentsModule,
+    ThermostatTimerPageRoutingModule,
   ],
   declarations: [ThermostatTimerPage]
 })
