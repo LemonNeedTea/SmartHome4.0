@@ -457,15 +457,31 @@ export class ThermostatPage implements OnInit {
 
 
   }
+  isTimerOpen(week:any){
+
+    if(week){
+     if(week>0){
+       return true;
+     }else{
+       return false;
+     }
+    }else{
+      return false;
+    }
+  }
   initDeviceData() {
     const deviceDatas = this.globalService$.DeviceData
     if (!deviceDatas || !deviceDatas[this.mac]) {
       return;
     }
-    console.log("我变化啦");
-    console.log(deviceDatas[this.mac]);
     const deviceData = deviceDatas[this.mac];
     this.deviceRealData = deviceData;
+//定时器
+    this.timer1Open = this.isTimerOpen(deviceData['timing_week1']);
+    this.timer2Open = this.isTimerOpen(deviceData['timing_week2']);
+    this.timer3Open = this.isTimerOpen(deviceData['timing_week3']);
+    this.timer4Open = this.isTimerOpen(deviceData['timing_week4']);
+
     this.roomTempData = deviceData.temp_envi;
     this.temp = deviceData.temp_set;
     if (this.setInfo.type === 'setTemp') { if (this.temp == this.setInfo.value) { this.dismissLoading(); } }
