@@ -10,6 +10,7 @@ import { ThermostatPage } from './thermostat.page';
 import { TranslateModule } from '@ngx-translate/core';
 import { BoolPipe } from '../../pipes/bool.pipe';
 import{ AirSettingModalPage} from '../modals/air-setting-modal/air-setting-modal.page'
+import { ThermostatTimerPage } from '../timer/thermostat-timer/thermostat-timer.page';
 
 @NgModule({
   imports: [
@@ -19,7 +20,8 @@ import{ AirSettingModalPage} from '../modals/air-setting-modal/air-setting-modal
     ThermostatPageRoutingModule,
     TranslateModule
   ],
-  declarations: [ThermostatPage, BoolPipe, AirSettingModalPage],
-  entryComponents: [AirSettingModalPage]
+  declarations: [ThermostatPage, BoolPipe, AirSettingModalPage,ThermostatTimerPage],
+  entryComponents: [AirSettingModalPage,ThermostatTimerPage],
+  
 })
 export class ThermostatPageModule {}

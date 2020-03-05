@@ -8,6 +8,8 @@ import { Subject, Observable, Subscribable, from } from 'rxjs';
 import { ToolsService } from '../../services/tools.service';
 import { ModalController } from '@ionic/angular';
 import { AirSettingModalPage } from '../modals/air-setting-modal/air-setting-modal.page'
+import { ThermostatTimerPage } from '../timer/thermostat-timer/thermostat-timer.page';
+
 
 @Component({
   selector: 'app-thermostat',
@@ -708,6 +710,13 @@ export class ThermostatPage implements OnInit {
   }
   goMorePage() {
     this.router.navigate(['/thermostat-detail'], { queryParams: this.queryParams });
+  }
+
+  async presentShowModal(id: number, name: string) {
+    const modal = await this.modalController.create({
+      component: ThermostatTimerPage
+    });
+    return await modal.present();
   }
 
 }
