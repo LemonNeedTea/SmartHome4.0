@@ -48,4 +48,8 @@ export class DeviceRequestService {
   async deleteMode(modeId: number) {
     return await this.axiosHttp.postByID('/userMode/delete', modeId)
   }
+
+  async updateUserModeSelected(modeId: number) {
+    return await this.axiosHttp.postByID('/userMode/updateSelected', modeId)
+  }
 }

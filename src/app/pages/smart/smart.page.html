@@ -16,7 +16,7 @@
          >
         <div class="drag" [ngClass]="{'mode-item-header-active': item.selected}">
             <div class="mode-item-header" (click)="editMode(item)">{{item.name}}</div>
-            <div class="mode-item-footer" (click)="setMode(mode,$event)">执行</div>
+            <div class="mode-item-footer" (click)="setMode(item)">执行</div>
         </div>
     </div>
   </ion-item>

@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { StorageService } from './storage.service';
-import { LoadingController, ToastController } from '@ionic/angular';
+import { LoadingController, ToastController, AlertController } from '@ionic/angular';
 import { async } from '@angular/core/testing';
 import * as Moment from 'moment';
 
@@ -11,7 +11,8 @@ export class ToolsService {
 
   constructor(private storage: StorageService,
     private loadingCtrl: LoadingController,
-    private toastCtrl: ToastController) { }
+    private toastCtrl: ToastController,
+    private alertController: AlertController) { }
   setToken(token: string) {
     this.storage.set('token', token);
   }
@@ -150,6 +151,35 @@ export class ToolsService {
       }
     }
     return arr;
+
+  }
+
+  async presentConfirm(message: string): Promise<any> {
+
+    return new Promise(async (reject, resove) => {
+      const alert = await this.alertController.create({
+        header: '确认',
+        message: `<strong>${message}</strong>`,
+        buttons: [
+          {
+            text: 'Cancel',
+            role: 'cancel',
+            cssClass: 'secondary',
+            handler: (blah) => {
+              console.log('Confirm Cancel: blah');
+            }
+          }, {
+            text: 'Okay',
+            handler: () => {
+              reject(true);
+            }
+          }
+        ]
+      });
+
+      await alert.present();
+    });
+
 
   }
 }
